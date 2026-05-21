@@ -1,9 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CookCraft
 
-## Getting Started
+A modern recipe sharing platform built with Next.js, featuring user authentication, recipe management, social interactions, and admin approval workflow.
 
-First, run the development server:
+## Features
 
+- **User Authentication**
+  - Sign up and login with email/password
+  - Password reset functionality
+  - User profile management with avatar and cover image
+  - Role-based access (user/admin)
+
+- **Recipe Management**
+  - Create, edit, and delete recipes
+  - Upload recipe images and videos
+  - Categorize recipes
+  - Admin approval workflow (pending/approve/reject)
+  - Cooking time and pre-cooking time tracking
+
+- **Social Interactions**
+  - Like and favorite recipes
+  - Comment on recipes with reply support
+  - Rate recipes (1-5 stars)
+  - View recipe history and activity
+
+- **Notifications**
+  - Real-time notifications for user activities
+  - Mark notifications as read
+
+- **Admin Dashboard**
+  - Manage recipe approvals
+  - View user statistics and analytics
+  - Monitor platform activity
+
+## Tech Stack
+
+- **Frontend Framework**: Next.js 15.3.8 (App Router)
+- **UI Library**: Material-UI (MUI) v7
+- **Styling**: Emotion, Styled Components
+- **Database**: PostgreSQL with Prisma ORM
+- **Authentication**: NextAuth.js v4
+- **Form Handling**: React Hook Form with Yup validation
+- **File Upload**: Multer, Formidable
+- **Charts**: Chart.js, Recharts
+- **Animations**: Framer Motion, AOS
+- **Email**: Nodemailer
+- **Real-time**: Socket.IO Client
+
+## Prerequisites
+
+- Node.js 18+ 
+- PostgreSQL database
+- npm, yarn, pnpm, or bun package manager
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd cookCraft-main
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Set up environment variables:
+Create a `.env` file in the root directory:
+```env
+DATABASE_URL="postgresql://username:password@localhost:5432/cookcraft"
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-secret-key"
+```
+
+4. Set up the database:
+```bash
+# Generate Prisma client
+npx prisma generate
+
+# Run migrations
+npx prisma migrate dev
+
+# (Optional) Seed the database
+npm run seed
+```
+
+## Running the Application
+
+Start the development server:
 ```bash
 npm run dev
 # or
@@ -14,26 +102,74 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+cookCraft-main/
+├── prisma/
+│   ├── migrations/       # Database migrations
+│   └── schema.prisma     # Database schema
+├── public/
+│   ├── images/           # Static images
+│   └── uploads/          # User-uploaded files
+├── src/
+│   ├── app/              # Next.js app router pages
+│   │   ├── admin/        # Admin dashboard
+│   │   ├── api/          # API routes
+│   │   ├── about/        # About page
+│   │   └── recipes/      # Recipe pages
+│   ├── components/       # Reusable components
+│   ├── lib/              # Utility libraries
+│   │   ├── auth.js       # Authentication configuration
+│   │   ├── env.js        # Environment variables
+│   │   └── prisma.js     # Prisma client
+│   └── middleware.js     # Next.js middleware
+├── .gitignore
+├── jsconfig.json
+├── next.config.mjs
+├── package.json
+└── README.md
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Database Schema
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application uses the following main models:
+- **User**: User accounts with profiles and roles
+- **Recipe**: Recipe content with approval status
+- **Category**: Recipe categories
+- **Comment**: Recipe comments with reply support
+- **Like**: Recipe likes
+- **Favourite**: User favorites
+- **Rating**: Recipe ratings
+- **History**: User activity history
+- **Notification**: User notifications
+- **PasswordResetToken**: Password reset tokens
 
-## Deploy on Vercel
+## Available Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run seed` - Seed the database
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contributing
 
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-<!-- npm install react-slick slick-carousel -->
+## License
+
+This project is private.
+
+## Support
+
+For support, please contact the development team.
