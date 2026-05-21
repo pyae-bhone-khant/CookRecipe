@@ -119,15 +119,6 @@ export default function RecipeCardWithFavorite({
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
-        borderRadius: "16px",
-        border: "3px solid transparent",
-        transition: "all 0.5s ease",
-        "&:hover": {
-          transform: "translateY(-5px)",
-          borderColor: "#ff6f00",
-          boxShadow: "0 4px 12px rgba(255, 111, 0, 0.9)",
-        },
         position: "relative",
       }}
     >
@@ -161,7 +152,7 @@ export default function RecipeCardWithFavorite({
               By {recipe.user?.username || recipe.author || "Unknown Chef"}
             </Typography>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <StarIcon sx={{ color: "orange", fontSize: 18}} />
+              <StarIcon sx={{ color: "#FFB000", fontSize: 18}} />
               <Typography variant="body2" sx={{ ml: 0.5 }}>
                 {average}/5
               </Typography>
@@ -183,9 +174,10 @@ export default function RecipeCardWithFavorite({
                 label={recipe?.category?.name}
                 size="small"
                 sx={{
-                  backgroundColor: "#fff3e0",
-                  color: "#ff6f00",
+                  backgroundColor: "rgba(255, 118, 34, 0.08)",
+                  color: "primary.main",
                   textTransform: "capitalize",
+                  fontWeight: 600,
                 }}
               />
               {recipe.status && recipe.status === "pending" && (
@@ -212,10 +204,12 @@ export default function RecipeCardWithFavorite({
               disabled={isProcessing || !session}
               size="small"
               sx={{
-                color: favorite ? '#ff1744' : 'rgba(0, 0, 0, 0.54)',
+                color: favorite ? 'secondary.main' : 'rgba(0, 0, 0, 0.38)',
                 '&:hover': {
-                  color: favorite ? '#ff1744' : '#ff6f00',
+                  color: favorite ? 'secondary.main' : 'primary.main',
+                  transform: 'scale(1.1)',
                 },
+                transition: 'all 0.2s ease',
                 padding: 0.5
               }}
               aria-label={favorite ? "Remove from favorites" : "Add to favorites"}

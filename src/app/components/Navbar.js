@@ -113,13 +113,13 @@ const Navbar = () => {
 
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: 'white', color: 'black', boxShadow: '0 4px 12px rgba(255, 111, 0, 0.2)' }}>
+    <AppBar position="sticky" sx={{ backgroundColor: 'rgba(250, 248, 245, 0.8)', color: 'text.primary', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255, 118, 34, 0.08)', boxShadow: '0 8px 32px rgba(255, 118, 34, 0.04)' }}>
       <Toolbar sx={{ justifyContent: 'space-around', alignItems: 'center' }}>
         {/* Logo */}
         <Typography
           variant="h6"
           sx={{
-            color: '#ff6f00',
+            color: 'primary.main',
             fontWeight: 'bold',
             cursor: 'pointer', // 🖱 cursor pointer so user knows it's clickable
           }}
@@ -134,13 +134,13 @@ const Navbar = () => {
           <Button
             onClick={() => handleNavigate('/home')}
             sx={{
-              color: isActive('/home') ? '#ff6f00' : 'black',
+              color: isActive('/home') ? 'primary.main' : 'text.primary',
               mx: 1,
               // fontWeight: isActive('/home') ? 'normal' : 'normal',
               transition: 'transform 0.3s',
               '&:hover': {
                 backgroundColor: 'transparent',
-                color: '#ff6f00',
+                color: 'primary.main',
                 transform: 'translateY(-3px)',
               },
             }}
@@ -151,13 +151,13 @@ const Navbar = () => {
           <Button
             onClick={() => handleNavigate('/recipes')}
             sx={{
-              color: isActive('/recipes') ? '#ff6f00' : 'black',
+              color: isActive('/recipes') ? 'primary.main' : 'text.primary',
               mx: 1,
               // fontWeight: isActive('/recipes') ? 'bold' : 'normal',
               transition: 'transform 0.3s',
               '&:hover': {
                 backgroundColor: 'transparent',
-                color: '#ff6f00',
+                color: 'primary.main',
                 transform: 'translateY(-3px)',
               },
             }}
@@ -168,13 +168,13 @@ const Navbar = () => {
           <Button
             onClick={() => handleNavigate('/about')}
             sx={{
-              color: isActive('/about') ? '#ff6f00' : 'black',
+              color: isActive('/about') ? 'primary.main' : 'text.primary',
               mx: 1,
               // fontWeight: isActive('/about') ? 'bold' : 'normal',
               transition: 'transform 0.3s',
               '&:hover': {
                 backgroundColor: 'transparent',
-                color: '#ff6f00',
+                color: 'primary.main',
                 transform: 'translateY(-3px)',
               },
             }}
@@ -185,13 +185,13 @@ const Navbar = () => {
           <Button
             onClick={() => handleNavigate('/contact')}
             sx={{
-              color: isActive('/contact') ? '#ff6f00' : 'black',
+              color: isActive('/contact') ? 'primary.main' : 'text.primary',
               mx: 1,
               // fontWeight: isActive('/contact') ? 'bold' : 'normal',
               transition: 'transform 0.3s',
               '&:hover': {
                 backgroundColor: 'transparent',
-                color: '#ff6f00',
+                color: 'primary.main',
                 transform: 'translateY(-3px)',
               },
             }}
@@ -207,12 +207,13 @@ const Navbar = () => {
           {pathname !== "/recipes/create" && (
             <Button
               onClick={() => handleNavigate('/recipes/create')}
-              variant="outlined"
+              variant="contained"
+              color="primary"
               startIcon={
                 <Box
                   sx={{
                     backgroundColor: "white",
-                    color: "#ff7f00",
+                    color: "primary.main",
                     borderRadius: "50%",
                     display: "flex",
                     alignItems: "center",
@@ -227,8 +228,6 @@ const Navbar = () => {
               }
               sx={{
                 textTransform: "none",
-                backgroundColor: "#ff7f00",
-                color: "white",
                 borderRadius: "20px",
                 paddingY: "6px",
                 paddingX: "16px",
@@ -236,7 +235,6 @@ const Navbar = () => {
                 fontWeight: 500,
                 transition: 'transform 0.3s',
                 "&:hover": {
-                  backgroundColor: "#e86f00",
                   transform: 'translateY(-3px)',
                 },
               }}

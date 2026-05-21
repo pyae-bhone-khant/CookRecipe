@@ -1,19 +1,147 @@
+/* =========================================================================
+   CookCraft - Global Design Stylesheet (Redesigned)
+   ========================================================================= */
 
-/* globals.css */
-@import "~slick-carousel/slick/slick.css";
-@import "~slick-carousel/slick/slick-theme.css";
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
 
+/* Design Tokens & CSS Variables */
+:root {
+  --color-primary: #FF7622;
+  --color-primary-grad: linear-gradient(135deg, #FF7622 0%, #FF5126 100%);
+  --color-secondary: #E84A5F;
+  --color-bg-base: #FAF8F5;
+  --color-text-dark: #1C1714;
+  --color-text-muted: #6A5E57;
+  
+  --font-display: var(--font-outfit), system-ui, -apple-system, sans-serif;
+  --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
+  
+  --shadow-sm: 0 2px 8px rgba(255, 118, 34, 0.04);
+  --shadow-md: 0 8px 32px rgba(255, 118, 34, 0.06);
+  --shadow-lg: 0 16px 48px rgba(255, 118, 34, 0.1);
+  
+  --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --border-radius-pill: 50px;
+  --border-radius-card: 20px;
+}
 
-/* styles/globals.css */
-html, body, #__next {
+/* Reset and Core Layout */
+html,
+body,
+#__next {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Horizontal scroll မဖြစ်အောင် */
+  background-color: var(--color-bg-base);
+  color: var(--color-text-dark);
+  font-family: var(--font-body);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
   display: flex;
   flex-direction: column;
+}
+
+/* Selection Highlight */
+::selection {
+  background-color: rgba(255, 118, 34, 0.2);
+  color: var(--color-text-dark);
+}
+
+/* Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+  transition: var(--transition-smooth);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E05500;
+}
+
+/* Glassmorphism Card Style Utility */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 118, 34, 0.08) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Premium Gradient Text Utility */
+.gradient-text {
+  background: var(--color-primary-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Slick Slider Customizations */
+.slick-slider {
+  margin: 0 -15px;
+}
+
+.slick-slide > div {
+  padding: 0 15px;
+}
+
+.slick-dots li button:before {
+  color: var(--color-primary) !important;
+  font-size: 8px !important;
+  opacity: 0.25;
+  transition: var(--transition-smooth);
+}
+
+.slick-dots li.slick-active button:before {
+  color: var(--color-primary) !important;
+  opacity: 1;
+  font-size: 10px !important;
+}
+
+/* Custom transitions for router progress pages */
+.nprogress-custom-parent {
+  overflow: hidden;
+  position: relative;
+}
+
+#nprogress .bar {
+  background: var(--color-primary-grad) !important;
+  height: 3px !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #FF7622, 0 0 5px #FF7622 !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: var(--color-primary) !important;
+  border-left-color: var(--color-primary) !important;
+}
+
+/* Background Soft Grid Mesh */
+.bg-mesh {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(255, 118, 34, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(232, 74, 95, 0.03) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(255, 162, 69, 0.02) 0px, transparent 50%);
 }

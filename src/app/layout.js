@@ -1,6 +1,6 @@
 
 
-import { Geist, Geist_Mono } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 
 import "slick-carousel/slick/slick.css";
@@ -17,14 +17,16 @@ import { Suspense } from "react";
 import RouteProgress from "./components/RouteProgress";
 
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata = {
@@ -40,7 +42,8 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </head>
 
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${outfit.variable} ${inter.variable}`}>
+        <div className="bg-mesh" />
         <AppRouterCacheProvider>
           <StyledRoot>
             {/* Add CssBaseline here to normalize styles */}

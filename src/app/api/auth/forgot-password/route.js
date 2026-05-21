@@ -1,3 +1,4 @@
+import { getBaseUrl } from "@/lib/env";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
@@ -41,7 +42,7 @@ export async function POST(request) {
     });
 
     // Create reset URL
-    const resetUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/users/reset-password?token=${resetToken}`;
+    const resetUrl = `${getBaseUrl()}/users/reset-password?token=${resetToken}`;
 
     // Configure email transporter
     const transporter = nodemailer.createTransport({
