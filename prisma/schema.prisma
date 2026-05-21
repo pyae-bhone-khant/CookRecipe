@@ -1,0 +1,184 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ROLE {
+  user
+  admin
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  username      String?   @unique
+  email         String    @unique @db.VarChar(255)
+  emailVerified DateTime?
+  password      String    @db.VarChar(255)
+  image_url     String?   @db.Text()
+  coverImage    String?   @db.Text()
+  phone         String?   @db.VarChar(20)
+  gender        String?   @db.VarChar(10)
+  birthdate     DateTime?
+  role          ROLE      @default(user)
+  createdAt     DateTime  @default(now())
+
+  recipes       Recipe[]
+  favourites    Favourite[]
+  comments      Comment[]
+  likes         Like[]
+  histories     History[]
+  ratings       Rating[]
+  notifications Notification[]
+  passwordResetTokens PasswordResetToken[]
+
+  @@map("users")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  used      Boolean  @default(false)
+
+  @@map("password_reset_tokens")
+}
+
+
+
+model Category {
+  id      String   @id @default(cuid())
+  name    String   @unique
+  recipes Recipe[]
+
+  @@map("categories")
+}
+
+enum STATUS {
+  pending
+  approve
+  reject
+}
+
+model Recipe {
+  id      Int    @id @default(autoincrement())
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  name             String      @db.VarChar(255)
+  ingredient       String      @db.Text
+  instruction      String      @db.Text
+  category_id      String
+  category         Category    @relation(fields: [category_id], references: [id])
+  pre_cooking_time String      @db.VarChar(255)
+  cooking_time     String      @db.VarChar(255)
+  image_url        String      @db.Text()
+  video_url        String?     @db.VarChar(255)
+  status           STATUS
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+  favourites       Favourite[]
+  comments         Comment[]
+  likes            Like[]
+  histories        History[]
+  ratings          Rating[]
+
+  @@map("recipes")
+}
+
+model Favourite {
+  id        Int    @id @default(autoincrement())
+  user_id   String
+  user      User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  recipe_id Int
+  recipe    Recipe @relation(fields: [recipe_id], references: [id], onDelete: Cascade)
+
+  @@map("favourites")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  createdAt DateTime @default(now())
+
+  // User and Recipe Relations
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  recipeId Int
+
+  // Reply Relations
+  parent   Comment?  @relation("Replies", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId Int?
+  replies  Comment[] @relation("Replies")
+
+  @@index([recipeId])
+  @@map("comments")
+}
+
+model Like {
+  id       Int    @id @default(autoincrement())
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipeId Int
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, recipeId])
+  @@map("likes")
+}
+
+enum ACTION {
+  created
+  liked
+  commented
+}
+
+model History {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipeId  Int
+  recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  action    ACTION
+  message   String?
+  createdAt DateTime @default(now())
+
+  @@map("histories")
+}
+
+model Rating {
+  id       Int    @id @default(autoincrement())
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  recipeId Int
+  rating   Int
+
+  @@unique([userId, recipeId])
+  @@map("ratings") // Prevent duplicate ratings
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  user_id   String
+  user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  message   String   @db.Text
+  is_read   Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("createdAt")
+
+  @@map("notifications")
+}
