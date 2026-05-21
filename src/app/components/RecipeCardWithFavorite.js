@@ -174,7 +174,7 @@ export default function RecipeCardWithFavorite({
                 label={recipe?.category?.name}
                 size="small"
                 sx={{
-                  backgroundColor: "rgba(255, 118, 34, 0.08)",
+                  backgroundColor: "rgba(16, 185, 129, 0.08)",
                   color: "primary.main",
                   textTransform: "capitalize",
                   fontWeight: 600,
@@ -240,11 +240,11 @@ export default function RecipeCardWithFavorite({
             position: "absolute",
             top: 8,
             right: 8,
-            border: "2px solid #ff7f00",
+            border: "2px solid #10B981",
             backgroundColor: "rgba(255, 255, 255, 0.85)",
             "&:hover": {
-              backgroundColor: "#ff7f00",
-              color: "#d32f2f",
+              backgroundColor: "#10B981",
+              color: "white",
             },
             zIndex: 10,
           }}

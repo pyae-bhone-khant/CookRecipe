@@ -33,12 +33,12 @@ export default function SearchBar({ onSearch }) {
         '& .MuiOutlinedInput-root': {
           borderRadius: '30px',
           backgroundColor: 'white',
-          borderColor: '#ff6f00',
+          borderColor: '#10B981',
           '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#ff6f00',
+            borderColor: '#10B981',
           },
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#ff6f00',
+            borderColor: '#10B981',
           },
         },
       }}

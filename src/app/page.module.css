@@ -1,10 +1,12 @@
 .page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+  --primary-rgb: 16, 185, 129;
+  --secondary-rgb: 139, 92, 246;
+  --primary-alpha-100: rgba(var(--primary-rgb), 0.08);
+  --primary-alpha-200: rgba(var(--primary-rgb), 0.15);
+  --secondary-alpha-100: rgba(var(--secondary-rgb), 0.08);
 
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
+  --button-primary-hover: #059669;
+  --button-secondary-hover: #F1F5F9;
 
   display: grid;
   grid-template-rows: 20px 1fr 20px;
@@ -13,17 +15,19 @@
   min-height: 100svh;
   padding: 80px;
   gap: 64px;
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-inter);
 }
 
 @media (prefers-color-scheme: dark) {
   .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
+    --primary-rgb: 52, 211, 153;
+    --secondary-rgb: 167, 139, 250;
+    --primary-alpha-100: rgba(var(--primary-rgb), 0.15);
+    --primary-alpha-200: rgba(var(--primary-rgb), 0.25);
+    --secondary-alpha-100: rgba(var(--secondary-rgb), 0.15);
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
+    --button-primary-hover: #34D399;
+    --button-secondary-hover: #1E293B;
   }
 }
 
@@ -35,73 +39,86 @@
 }
 
 .main ol {
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-inter);
   padding-left: 0;
   margin: 0;
-  font-size: 14px;
-  line-height: 24px;
+  font-size: 15px;
+  line-height: 26px;
   letter-spacing: -0.01em;
   list-style-position: inside;
 }
 
 .main li:not(:last-of-type) {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .main code {
   font-family: inherit;
-  background: var(--gray-alpha-100);
-  padding: 2px 4px;
-  border-radius: 4px;
+  background: var(--primary-alpha-100);
+  padding: 3px 8px;
+  border-radius: 8px;
   font-weight: 600;
+  color: #10B981;
 }
 
 .ctas {
   display: flex;
-  gap: 16px;
+  gap: 20px;
 }
 
 .ctas a {
   appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
+  border-radius: 12px;
+  height: 52px;
+  padding: 0 28px;
   border: none;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 16px;
   line-height: 20px;
-  font-weight: 500;
+  font-weight: 600;
+  font-family: var(--font-outfit);
 }
 
 a.primary {
-  background: var(--foreground);
-  color: var(--background);
-  gap: 8px;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFFFFF;
+  gap: 10px;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
 }
 
 a.secondary {
-  border-color: var(--gray-alpha-200);
-  min-width: 158px;
+  border-color: var(--primary-alpha-200);
+  min-width: 168px;
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.04);
 }
 
 .footer {
   grid-row-start: 3;
   display: flex;
-  gap: 24px;
+  gap: 32px;
 }
 
 .footer a {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  color: #475569;
+  transition: color 0.2s ease;
+}
+
+.footer a:hover {
+  color: #10B981;
 }
 
 .footer img {
@@ -111,13 +128,17 @@ a.secondary {
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   a.primary:hover {
-    background: var(--button-primary-hover);
+    background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
     border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
   }
 
   a.secondary:hover {
     background: var(--button-secondary-hover);
-    border-color: transparent;
+    border-color: #10B981;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.15);
   }
 
   .footer a:hover {
@@ -145,9 +166,10 @@ a.secondary {
   }
 
   .ctas a {
-    font-size: 14px;
-    height: 40px;
-    padding: 0 16px;
+    font-size: 15px;
+    height: 48px;
+    padding: 0 24px;
+    width: 100%;
   }
 
   a.secondary {

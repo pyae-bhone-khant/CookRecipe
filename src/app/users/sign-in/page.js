@@ -109,7 +109,7 @@ export default function Login() {
           <Typography variant="h5" fontWeight="bold" mb={1}>
             Welcome back to CoolCraft!
           </Typography>
-          <Typography variant="body2" color="#FB8C00">
+          <Typography variant="body2" color="#10B981">
             Sign in to continue sharing
           </Typography>
 
@@ -157,8 +157,7 @@ export default function Login() {
           />
           <Button href="/users/forget-password" variant="body2" sx={{
                   '&:hover': {
-                    color:'#e65100',
-                    
+                    color:'#10B981',
                   }
              }}>
             Forget Password
@@ -174,11 +173,11 @@ export default function Login() {
             fullWidth
             variant="contained"
             type="submit"
-            sx={{ mt: 2, backgroundColor: "#ff6f00", color: "#fff", borderRadius: 4,
+            sx={{ mt: 2, backgroundColor: "#10B981", color: "#fff", borderRadius: 4,
               transition: 'transform 0.5s',
                   transition: 'all 0.5s ease',
                   '&:hover': {
-                    backgroundColor: '#e65100',
+                    backgroundColor: '#059669',
                     transform: 'translateY(-5px)',
                   }
              }}
@@ -190,10 +189,8 @@ export default function Login() {
             Don't have an account?{" "}
             <Button href="/users/sign-up" size="small" 
               sx={{
-              
                   '&:hover': {
-                    color:'#e65100',
-                    
+                    color:'#10B981',
                   }
              }}
             >

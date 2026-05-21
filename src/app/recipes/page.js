@@ -147,7 +147,7 @@ export default function Recipe() {
           {/* Loading State */}
           {loading && (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
-              <CircularProgress sx={{ color: '#ff6f00' }} />
+              <CircularProgress sx={{ color: '#10B981' }} />
               <Typography sx={{ ml: 2 }}>Loading delicious recipes...</Typography>
             </Box>
           )}
@@ -223,10 +223,10 @@ export default function Recipe() {
                   borderRadius: 2,
                 },
                 '& .Mui-selected': {
-                  backgroundColor: '#ff6f00',
+                  backgroundColor: '#10B981',
                   color: 'white',
                   '&:hover': {
-                    backgroundColor: '#e65100'
+                    backgroundColor: '#059669'
                   }
                 }
               }}

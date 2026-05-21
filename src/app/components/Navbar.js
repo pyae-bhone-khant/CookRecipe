@@ -113,7 +113,7 @@ const Navbar = () => {
 
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: 'rgba(250, 248, 245, 0.8)', color: 'text.primary', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255, 118, 34, 0.08)', boxShadow: '0 8px 32px rgba(255, 118, 34, 0.04)' }}>
+    <AppBar position="sticky" sx={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', color: 'text.primary', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(16, 185, 129, 0.1)', boxShadow: '0 4px 20px rgba(16, 185, 129, 0.1)' }}>
       <Toolbar sx={{ justifyContent: 'space-around', alignItems: 'center' }}>
         {/* Logo */}
         <Typography
@@ -252,18 +252,22 @@ const Navbar = () => {
             onClick={() => handleNavigate('/profile')}
             src={user?.image_url || undefined}
             sx={{
-              bgcolor: user?.image_url ? 'transparent' : '#ff7f00',
+              bgcolor: user?.image_url ? 'transparent' : '#10B981',
               cursor: 'pointer',
               transition: 'transform 0.3s',
               width: 40,
               height: 40,
               "&:hover": {
                 transform: 'translateY(-3px)',
-                boxShadow: '0 4px 12px rgba(255, 111, 0, 0.4)',
+                boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
               },
             }}
           >
-            {!user?.image_url && (user?.username?.charAt(0) || session?.user?.username?.charAt(0) || 'U')}
+            {!user?.image_url && (
+              <Box component="span" sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+                {user?.username?.charAt(0)?.toUpperCase() || session?.user?.username?.charAt(0)?.toUpperCase() || session?.user?.name?.charAt(0)?.toUpperCase() || 'U'}
+              </Box>
+            )}
           </Avatar>
 
           {/* More Menu */}
@@ -293,7 +297,7 @@ const Navbar = () => {
               }}
               sx={{
                 "&:hover": {
-                  backgroundColor: "#ff9f00",
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
                 },
               }}
             >
@@ -309,7 +313,7 @@ const Navbar = () => {
               }}
               sx={{
                 "&:hover": {
-                  backgroundColor: "#ff9f00",
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
                 },
               }}
             >
@@ -326,7 +330,7 @@ const Navbar = () => {
               }}
               sx={{
                 "&:hover": {
-                  backgroundColor: "#ff9f00",
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
                 },
               }}
             >
@@ -344,7 +348,7 @@ const Navbar = () => {
               }}
               sx={{
                 "&:hover": {
-                  backgroundColor: "#ff9f00",
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
                 },
               }}
             >
@@ -363,7 +367,7 @@ const Navbar = () => {
             aria-describedby="logout-dialog-description"
           >
             <DialogTitle id="logout-dialog-title" sx={{ textAlign: "center" }}>
-              <WarningAmberIcon sx={{ color: "#ff7f00", fontSize: 50 }} />
+              <WarningAmberIcon sx={{ color: "#10B981", fontSize: 50 }} />
             </DialogTitle>
             <DialogContent sx={{ textAlign: "center" }}>
               <Typography variant="h6" gutterBottom>

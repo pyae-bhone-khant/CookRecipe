@@ -85,7 +85,7 @@ export default function Contact() {
               </Typography>
               <Button
                 variant="contained"
-                sx={{ bgcolor: "#F57C00", color: "white" }}
+                sx={{ bgcolor: "#10B981", color: "white" }}
               >
                 CONTACT US
               </Button>
@@ -114,7 +114,7 @@ export default function Contact() {
               fontWeight="bold"
               textAlign="center"
               mb={4}
-              color="#F57C00"
+              color="#10B981"
             >
               Send Message
             </Typography>
@@ -204,7 +204,7 @@ export default function Contact() {
                   <Button
                     type="submit"
                     variant="contained"
-                    sx={{ bgcolor: "#F57C00", px: 4, color: "white" }}
+                    sx={{ bgcolor: "#10B981", px: 4, color: "white" }}
                   >
                     Send Message
                   </Button>
@@ -214,7 +214,7 @@ export default function Contact() {
           </Container>
         </Box>
         {/* Footer */}
-        <Box sx={{ bgcolor: "#F57C00", color: "#fff", mt: 0, py: 13 }}>
+        <Box sx={{ bgcolor: "#10B981", color: "#fff", mt: 0, py: 13 }}>
           <Container maxWidth="lg">
             <Box
               sx={{

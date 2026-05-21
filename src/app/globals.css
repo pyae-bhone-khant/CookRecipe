@@ -1,5 +1,5 @@
 /* =========================================================================
-   CookCraft - Global Design Stylesheet (Redesigned)
+   CookCraft - Global Design Stylesheet (Modern Redesign)
    ========================================================================= */
 
 @import "slick-carousel/slick/slick.css";
@@ -7,23 +7,29 @@
 
 /* Design Tokens & CSS Variables */
 :root {
-  --color-primary: #FF7622;
-  --color-primary-grad: linear-gradient(135deg, #FF7622 0%, #FF5126 100%);
-  --color-secondary: #E84A5F;
-  --color-bg-base: #FAF8F5;
-  --color-text-dark: #1C1714;
-  --color-text-muted: #6A5E57;
+  --color-primary: #10B981;
+  --color-primary-grad: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  --color-secondary: #8B5CF6;
+  --color-secondary-grad: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+  --color-bg-base: #F8FAFC;
+  --color-bg-alt: #F1F5F9;
+  --color-text-dark: #0F172A;
+  --color-text-muted: #475569;
+  --color-text-light: #94A3B8;
   
   --font-display: var(--font-outfit), system-ui, -apple-system, sans-serif;
   --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
   
-  --shadow-sm: 0 2px 8px rgba(255, 118, 34, 0.04);
-  --shadow-md: 0 8px 32px rgba(255, 118, 34, 0.06);
-  --shadow-lg: 0 16px 48px rgba(255, 118, 34, 0.1);
+  --shadow-sm: 0 2px 8px rgba(16, 185, 129, 0.08);
+  --shadow-md: 0 8px 32px rgba(16, 185, 129, 0.12);
+  --shadow-lg: 0 16px 48px rgba(16, 185, 129, 0.16);
+  --shadow-xl: 0 24px 64px rgba(16, 185, 129, 0.2);
   
   --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --border-radius-pill: 50px;
-  --border-radius-card: 20px;
+  --border-radius-card: 16px;
+  --border-radius-lg: 20px;
 }
 
 /* Reset and Core Layout */
@@ -49,14 +55,14 @@ body {
 
 /* Selection Highlight */
 ::selection {
-  background-color: rgba(255, 118, 34, 0.2);
+  background-color: rgba(16, 185, 129, 0.2);
   color: var(--color-text-dark);
 }
 
 /* Premium Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -65,19 +71,19 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-primary);
-  border-radius: 4px;
+  border-radius: 6px;
   transition: var(--transition-smooth);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #E05500;
+  background: #059669;
 }
 
 /* Glassmorphism Card Style Utility */
 .glass-card {
-  background: rgba(255, 255, 255, 0.85) !important;
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 118, 34, 0.08) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(16, 185, 129, 0.1) !important;
   box-shadow: var(--shadow-md) !important;
 }
 
@@ -85,6 +91,15 @@ body {
 .gradient-text {
   background: var(--color-primary-grad);
   -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.gradient-text-secondary {
+  background: var(--color-secondary-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
 }
@@ -100,15 +115,15 @@ body {
 
 .slick-dots li button:before {
   color: var(--color-primary) !important;
-  font-size: 8px !important;
-  opacity: 0.25;
+  font-size: 10px !important;
+  opacity: 0.3;
   transition: var(--transition-smooth);
 }
 
 .slick-dots li.slick-active button:before {
   color: var(--color-primary) !important;
   opacity: 1;
-  font-size: 10px !important;
+  font-size: 12px !important;
 }
 
 /* Custom transitions for router progress pages */
@@ -119,11 +134,11 @@ body {
 
 #nprogress .bar {
   background: var(--color-primary-grad) !important;
-  height: 3px !important;
+  height: 4px !important;
 }
 
 #nprogress .peg {
-  box-shadow: 0 0 10px #FF7622, 0 0 5px #FF7622 !important;
+  box-shadow: 0 0 10px #10B981, 0 0 5px #10B981 !important;
 }
 
 #nprogress .spinner-icon {
@@ -141,7 +156,78 @@ body {
   z-index: -1;
   pointer-events: none;
   background-image: 
-    radial-gradient(at 0% 0%, rgba(255, 118, 34, 0.03) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(232, 74, 95, 0.03) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(255, 162, 69, 0.02) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.04) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.04) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(52, 211, 153, 0.03) 0px, transparent 50%);
+}
+
+/* Modern Section Spacing */
+section {
+  padding: 80px 0;
+}
+
+/* Modern Link Styles */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  color: #059669;
+}
+
+/* Modern Heading Styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text-dark);
+}
+
+/* Modern Button Base Styles */
+button {
+  font-family: var(--font-display);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+/* Modern Card Hover Effects */
+.card-hover {
+  transition: var(--transition-smooth);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Modern Badge Styles */
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--color-primary-grad);
+  color: white;
+}
+
+/* Modern Tag Styles */
+.tag {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--color-bg-alt);
+  color: var(--color-text-muted);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+  transition: var(--transition-fast);
+}
+
+.tag:hover {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
 }

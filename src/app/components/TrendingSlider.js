@@ -40,11 +40,11 @@ const TrendingSlider = ({ items = [] }) => {
         transform: "translateY(-50%)",
         zIndex: 2,
         textTransform: "none",
-        borderColor: "#ff7b00",
-        color: "white",
-        borderRadius: "50px",
+        borderColor: "#10B981",
+        color: "#10B981",
+        borderRadius: "12px",
         px: 3,
-        "&:hover": { backgroundColor: "#e65100" },
+        "&:hover": { backgroundColor: "#10B981", color: "white" },
       }}
     >
       <ArrowForwardIosIcon />
@@ -63,11 +63,11 @@ const TrendingSlider = ({ items = [] }) => {
         transform: "translateY(-50%)",
         zIndex: 2,
         textTransform: "none",
-        borderColor: "#ff7b00",
-        color: "white",
-        borderRadius: "50px",
+        borderColor: "#10B981",
+        color: "#10B981",
+        borderRadius: "12px",
         px: 3,
-        "&:hover": { backgroundColor: "#e65100" },
+        "&:hover": { backgroundColor: "#10B981", color: "white" },
       }}
     >
       <ArrowBackIosNewIcon />
@@ -118,12 +118,12 @@ const TrendingSlider = ({ items = [] }) => {
                 top: 0,
                 bottom: 0,
                 width: { xs: '30%', md: '25%' },
-                background: 'linear-gradient(to right, rgba(255,111,0,0.7), transparent)',
+                background: 'linear-gradient(to right, rgba(16,185,129,0.7), transparent)',
                 zIndex: 1,
               }}
             />
 
-            {/* Right Orange Gradient Overlay */}
+            {/* Right Emerald Green Gradient Overlay */}
             <Box
               sx={{
                 position: 'absolute',
@@ -131,7 +131,7 @@ const TrendingSlider = ({ items = [] }) => {
                 top: 0,
                 bottom: 0,
                 width: { xs: '30%', md: '25%' },
-                background: 'linear-gradient(to left, rgba(255,111,0,0.7), transparent)',
+                background: 'linear-gradient(to left, rgba(16,185,129,0.7), transparent)',
                 zIndex: 1,
               }}
             />

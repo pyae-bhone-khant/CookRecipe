@@ -151,11 +151,11 @@ const NotificationMenu = () => {
     >
       <Avatar
         sx={{
-          bgcolor: "#F57C00",
+          bgcolor: "#10B981",
           cursor: "pointer",
           transition: "transform 0.3s",
           "&:hover": {
-            backgroundColor: "#e86f00",
+            backgroundColor: "#059669",
             transform: "translateY(-3px)",
           },
         }}
@@ -207,7 +207,7 @@ const NotificationMenu = () => {
                   onClick={handleClose}
                   sx={{
                     "&:hover": {
-                      backgroundColor: "#ff9f00",
+                      backgroundColor: "rgba(16, 185, 129, 0.1)",
                     },
                   }}
                 >

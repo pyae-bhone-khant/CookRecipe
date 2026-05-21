@@ -105,7 +105,7 @@ export default function SignUp() {
           <Typography variant="h5" fontWeight="bold" mb={1}>
             Join CookCraft Today!
           </Typography>
-          <Typography variant="body2" color="#FB8C00">
+          <Typography variant="body2" color="#10B981">
             Create your account to start sharing
           </Typography>
 
@@ -181,11 +181,11 @@ export default function SignUp() {
             variant="contained"
             type="submit"
             sx={{
-              mt: 2, backgroundColor: "#ff6f00", color: "#fff", borderRadius: 4,
+              mt: 2, backgroundColor: "#10B981", color: "#fff", borderRadius: 4,
               transition: 'transform 0.5s',
               transition: 'all 0.5s ease',
               '&:hover': {
-                backgroundColor: '#e65100',
+                backgroundColor: '#059669',
                 transform: 'translateY(-5px)',
               }
             }}
@@ -201,7 +201,7 @@ export default function SignUp() {
               transition: 'transform 0.5s',
                   transition: 'all 0.5s ease',
                   '&:hover': {
-                    color:'#e65100',
+                    color:'#10B981',
                     transform: 'translateY(-5px)',
                   }
              }}

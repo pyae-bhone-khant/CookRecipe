@@ -62,10 +62,6 @@ import ArticleIcon from "@mui/icons-material/Article";
 
 
 const schema = yup.object().shape({
-  //  user_id: yup
-  //   .number()
-  //   .typeError("User ID must be a number")
-  //   .required("User ID is required"),
   name: yup.string().required("Recipe name is required"),
 
   ingredient: yup
@@ -80,18 +76,13 @@ const schema = yup.object().shape({
 
   category_id: yup
     .string()
-    // .oneOf(["breakfast", "lunch", "dinner", "dessert"], "Invalid category")
     .required("Category is required"),
 
   pre_cooking_time: yup.string().required("Pre-cooking time is required"),
 
   cooking_time: yup.string().required("Cooking time is required"),
 
-  // image: yup.mixed().required("Image is required"),
-
-  // status: yup
-  //   .string()
-  //   .oneOf(["pending", "approve", "reject"], "Invalid status"),
+  image_url: yup.string().required("Image is required"),
 });
 
 export default function SubmitRecipePage() {
@@ -133,7 +124,6 @@ export default function SubmitRecipePage() {
   const handleCloseNotification = () => setAnchorE2(null);
   const [currentPage, setCurrentPage] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -151,7 +141,7 @@ export default function SubmitRecipePage() {
     watch,
     formState: { errors },
   } = useForm({
-    // resolver: yupResolver(schema), // Temporarily disabled for debugging
+    resolver: yupResolver(schema),
     defaultValues: {
       name: "",
       category_id: "",
@@ -198,8 +188,8 @@ export default function SubmitRecipePage() {
       }
 
       return await response.json();
-    } catch (error) {
-      console.error('Upload error:', error);
+    } catch (err) {
+      console.error('Upload error:', err);
       setMessage('Image upload failed');
       return null;
     }
@@ -257,7 +247,7 @@ export default function SubmitRecipePage() {
       const result = await response.json();
 
       // Set the base64 image URL in the form data
-      setValue("image_url", result.image_url);
+      setValue("image_url", result.image_url, { shouldValidate: true });
       setImageFile(file);
       setUploadProgress(100);
 
@@ -275,36 +265,36 @@ export default function SubmitRecipePage() {
 
 
   const onSubmit = async (data) => {
-    alert("onSubmit function called!"); // Debug alert
     console.log("Form data:", data);
+
+    if (!session?.user?.id) {
+      setMessage("You must be logged in to submit a recipe.");
+      setMessageType("error");
+      return;
+    }
 
     try {
       setIsSubmitting(true);
-      setMessage("Testing form submission...");
-      setMessageType("success");
+      setMessage("Submitting recipe...");
+      setMessageType("info");
 
-      // Simple test - just log the data
-      console.log("Form submitted with data:", data);
-      console.log("Session:", session);
-
-      // Test API call with minimal data
-      const testData = {
-        user_id: session?.user?.id || "test-user",
-        name: data.name || "Test Recipe",
-        ingredient: data.ingredient || "Test ingredients",
-        instruction: data.instruction || "Test instructions",
-        category_id: data.category_id || "test-category",
-        pre_cooking_time: data.pre_cooking_time || "10 min",
-        cooking_time: data.cooking_time || "20 min",
-        image_url: data.image_url || "data:image/jpeg;base64,test",
+      const recipeData = {
+        user_id: session.user.id,
+        name: data.name,
+        ingredient: data.ingredient,
+        instruction: data.instruction,
+        category_id: data.category_id,
+        pre_cooking_time: data.pre_cooking_time,
+        cooking_time: data.cooking_time,
+        image_url: data.image_url,
         video_url: null,
-        status: "pending"
+        status: "approve"
       };
 
-      console.log("Sending test data to API:", testData);
+      console.log("Sending recipe data to API:", recipeData);
 
       // Add timeout to the request
-      const response = await axios.post("/api/recipes", testData, {
+      const response = await axios.post("/api/recipes", recipeData, {
         timeout: 10000 // 10 second timeout
       });
 
@@ -314,13 +304,17 @@ export default function SubmitRecipePage() {
       setMessageType("success");
 
       setTimeout(() => {
-        router.push("/");
+        router.push("/home");
       }, 2000);
 
     } catch (error) {
       console.error("Submission error:", error);
       console.error("Error response:", error.response?.data);
-      setMessage(error.response?.data?.message || error.response?.data?.errors?.join(", ") || "Failed to submit recipe");
+      const errorMessage = error.response?.data?.message || 
+                          error.response?.data?.errors?.join(", ") || 
+                          error.message || 
+                          "Failed to submit recipe";
+      setMessage(errorMessage);
       setMessageType("error");
     } finally {
       setIsSubmitting(false);
@@ -341,8 +335,8 @@ export default function SubmitRecipePage() {
       const response = await axios.get("/api/admin/categories");
       console.log("API response:", response);
       setCategories(response.data.categories || []);
-    } catch (error) {
-      console.error("Failed to fetch users:", error);
+    } catch (err) {
+      console.error("Failed to fetch users:", err);
       setCategories([]);
     }
   };

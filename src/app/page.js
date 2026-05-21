@@ -48,14 +48,13 @@ const Navbar = ({ scrollToTop, scrollToRecipes, scrollToAbout, scrollToContact, 
     <AppBar
       position="sticky"
       sx={{
-        backgroundColor: 'white',
-        color: 'black',
-        // boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-        boxShadow: '0 4px 12px rgba(255, 111, 0, 0.2)',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        color: '#0F172A',
+        boxShadow: '0 4px 20px rgba(16, 185, 129, 0.1)',
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-around', alignItems: 'center' }}>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#ff6f00' }}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#10B981' }}>
           COOKCRAFT
         </Typography>
         <Box sx={{ display: { md: 'flex' }, gap: 2 }}>
@@ -70,8 +69,7 @@ const Navbar = ({ scrollToTop, scrollToRecipes, scrollToAbout, scrollToContact, 
             }}
             sx={{
               cursor: 'pointer',
-              color: activeSection === 'home' ? '#ff6f00' : 'inherit',
-              // fontWeight: activeSection === 'home' ? 'bold' : 'normal',
+              color: activeSection === 'home' ? '#10B981' : 'inherit',
             }}
           >
             Home
@@ -85,8 +83,7 @@ const Navbar = ({ scrollToTop, scrollToRecipes, scrollToAbout, scrollToContact, 
             onClick={scrollToRecipes}
             sx={{
               cursor: 'pointer',
-              color: activeSection === 'recipes' ? '#ff6f00' : 'inherit',
-              // fontWeight: activeSection === 'recipes' ? 'bold' : 'normal',
+              color: activeSection === 'recipes' ? '#10B981' : 'inherit',
             }}
           >
             Recipes
@@ -98,8 +95,7 @@ const Navbar = ({ scrollToTop, scrollToRecipes, scrollToAbout, scrollToContact, 
             onClick={scrollToAbout}
             sx={{
               cursor: 'pointer',
-              color: activeSection === 'about' ? '#ff6f00' : 'inherit',
-              // fontWeight: activeSection === 'about' ? 'bold' : 'normal',
+              color: activeSection === 'about' ? '#10B981' : 'inherit',
             }}
           >
             About
@@ -112,8 +108,7 @@ const Navbar = ({ scrollToTop, scrollToRecipes, scrollToAbout, scrollToContact, 
             onClick={scrollToContact}
             sx={{
               cursor: 'pointer',
-              color: activeSection === 'contact' ? '#ff6f00' : 'inherit',
-              // fontWeight: activeSection === 'contact' ? 'bold' : 'normal',
+              color: activeSection === 'contact' ? '#10B981' : 'inherit',
             }}
           >
             Contact us
@@ -124,16 +119,16 @@ const Navbar = ({ scrollToTop, scrollToRecipes, scrollToAbout, scrollToContact, 
         <Box sx={{ display: 'flex', gap: 1 }}>
           <Link href="/users/sign-up" passHref>
             <Button variant="contained" sx={{
-              backgroundColor: '#ff6f00',
+              backgroundColor: '#10B981',
               color: 'white',
-              borderRadius: '20px',
+              borderRadius: '12px',
               textTransform: 'none',
               transition: 'transform 0.3s',
 
               '&:hover': {
-                backgroundColor: '#e65100',
-                transform: 'translateY(-3px)',
-                boxShadow: '0 4px 12px rgba(255, 111, 0, 0.3)',
+                backgroundColor: '#059669',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 8px 25px rgba(16, 185, 129, 0.25)',
               }
             }}>
               Sign up
@@ -141,17 +136,16 @@ const Navbar = ({ scrollToTop, scrollToRecipes, scrollToAbout, scrollToContact, 
           </Link>
           <Link href="/users/sign-in" passHref>
             <Button variant="outlined" sx={{
-              borderColor: '#ff7b00',
-              color: '#ff6f00',
-              borderRadius: '20px',
+              borderColor: '#10B981',
+              color: '#10B981',
+              borderRadius: '12px',
               textTransform: 'none',
               transition: 'transform 0.3s',
-              // transition: 'border-color 0.5s ease',
               '&:hover': {
-                backgroundColor: '#ff6f00',
+                backgroundColor: '#10B981',
                 color: 'white',
-                transform: 'translateY(-3px)',
-                boxShadow: '0 4px 12px rgba(255, 111, 0, 0.3)',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 8px 25px rgba(16, 185, 129, 0.25)',
               }
             }}>
               Log in
@@ -177,11 +171,11 @@ const NextArrow = ({ onClick }) => (
       transform: 'translateY(-50%)',
       zIndex: 2,
       textTransform: 'none',
-      borderColor: '#ff7b00',
-      color: 'white',
-      borderRadius: '50px',
+      borderColor: '#10B981',
+      color: '#10B981',
+      borderRadius: '12px',
       px: 3,
-      '&:hover': { backgroundColor: '#e65100' }
+      '&:hover': { backgroundColor: '#10B981', color: 'white' }
     }}
   >
     <ArrowForwardIosIcon />
@@ -199,11 +193,11 @@ const PrevArrow = ({ onClick }) => (
       transform: 'translateY(-50%)',
       zIndex: 2,
       textTransform: 'none',
-      borderColor: '#ff7b00',
-      color: 'white',
-      borderRadius: '50px',
+      borderColor: '#10B981',
+      color: '#10B981',
+      borderRadius: '12px',
       px: 3,
-      '&:hover': { backgroundColor: '#e65100' }
+      '&:hover': { backgroundColor: '#10B981', color: 'white' }
     }}
   >
     <ArrowBackIosNewIcon />
@@ -270,7 +264,7 @@ const TrendingSlider = () => {
                 left: 0, top: 0,
                 bottom: 0,
                 width: { xs: '30%', md: '25%' },
-                background: 'linear-gradient(to right, rgba(255,111,0,0.7), transparent)',
+                background: 'linear-gradient(to right, rgba(16,185,129,0.7), transparent)',
                 zIndex: 1,
               }}
             />
@@ -283,7 +277,7 @@ const TrendingSlider = () => {
                 top: 0,
                 bottom: 0,
                 width: { xs: '30%', md: '25%' },
-                background: 'linear-gradient(to left, rgba(255,111,0,0.7), transparent)',
+                background: 'linear-gradient(to left, rgba(16,185,129,0.7), transparent)',
                 zIndex: 1,
               }}
             />
@@ -312,7 +306,7 @@ const TrendingSlider = () => {
 // Taste of Food Section
 const FoodCategoryCard = ({ icon, title, description }) => (
   <Card sx={{
-    height: '100%', p: 2, borderRadius: '16px', boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+    height: '100%', p: 2, borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
 
     flex: 1,
     display: 'flex',
@@ -321,17 +315,17 @@ const FoodCategoryCard = ({ icon, title, description }) => (
     transition: 'border-color 0.3s ease',
     transition: 'transform 0.3s',
     '&:hover': {
-      transform: 'translateY(-3px)',
-      borderColor: '#ff6f00', // Your highlight color
-      boxShadow: '0 4px 12px rgba(255, 111, 0, 0.9)', // Optional: more shadow on hover
+      transform: 'translateY(-4px)',
+      borderColor: '#10B981',
+      boxShadow: '0 8px 30px rgba(16, 185, 129, 0.15)',
     },
 
 
   }}>
     <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-      <Box sx={{ mr: 2, color: '#e65100' }}>{icon}</Box>
+      <Box sx={{ mr: 2, color: '#10B981' }}>{icon}</Box>
       <Box>
-        <Typography variant="h6" sx={{ fontWeight: '600', color: '#ff6f00' }}>{title}</Typography>
+        <Typography variant="h6" sx={{ fontWeight: '600', color: '#10B981' }}>{title}</Typography>
         <Typography variant="body2" color="black">{description}</Typography>
       </Box>
     </Box>
@@ -355,8 +349,8 @@ const TasteOfFood = () => {
       <Container maxWidth="lg">
         <Typography variant="h4" align="center" sx={{
           fontWeight: 'bold',
-          mb: 6, //------------------------------------------------
-          color: '#ff6f00'
+          mb: 6,
+          color: '#10B981'
         }}>
           Taste of Food
         </Typography>
@@ -415,8 +409,8 @@ const PopularRecipes = () => {
       <Container maxWidth="lg">
         <Typography variant="h4" align="center" sx={{
           fontWeight: 'bold',
-          mb: 6, //---------------------------------------------------------
-          color: '#ff6f00',
+          mb: 6,
+          color: '#10B981',
           textAlign: 'center'
         }}>
           Popular Recipes
@@ -437,14 +431,13 @@ const PopularRecipes = () => {
               <Card sx={{
                 height: '100%',
                 borderRadius: '16px',
-                border: '3px solid transparent',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                border: '2px solid transparent',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
                 transition: 'transform 0.5s',
-                // transition: 'border-color 0.5s ease',
                 '&:hover': {
-                  transform: 'translateY(-5px)',
-                  borderColor: '#ff6f00',
-                  boxShadow: '0 4px 12px rgba(255, 111, 0, 0.9)',
+                  transform: 'translateY(-6px)',
+                  borderColor: '#10B981',
+                  boxShadow: '0 12px 40px rgba(16, 185, 129, 0.15)',
                 }
               }}>
                 {/* Placeholder for image - replace with your actual images */}
@@ -482,7 +475,7 @@ const PopularRecipes = () => {
                     {recipe.title}
                   </Typography>
                   <Typography variant="body2" sx={{
-                    color: '#ff6f00',
+                    color: '#10B981',
                     fontWeight: 'bold',
                     fontSize: '0.8rem'
                   }}>
@@ -527,8 +520,8 @@ const WhyChooseUs = () => {
       <Container maxWidth="lg">
         <Typography variant="h4" align="center" sx={{
           fontWeight: 'bold',
-          mb: 6,  //---------------------------------------------------------
-          color: '#ff6f00'
+          mb: 6,
+          color: '#10B981'
         }}>
           Why Choose Us?
         </Typography>
@@ -556,10 +549,8 @@ const WhyChooseUs = () => {
 
                 p: 3,
                 borderRadius: '16px',
-                border: '3px solid transparent',
-                //  border: feature.isHighlighted ? '3px solid #ff6f00' : '3px solid #f0f0f0',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                // boxShadow: feature.isHighlighted ? '0 4px 12px rgba(255, 111, 0, 0.2)' : '0 2px 8px rgba(0,0,0,0.1)',
+                border: '2px solid transparent',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -568,20 +559,17 @@ const WhyChooseUs = () => {
                 maxWidth: '300px',
                 transition: 'transform 0.5s',
                 transition: 'all 0.5s ease',
-                // transition: 'border-color 0.3s ease',
 
-                backgroundColor: feature.isHighlighted ? '#ff6f00' : 'white',
+                backgroundColor: feature.isHighlighted ? '#10B981' : 'white',
                 '&:hover': {
-                  transform: 'translateY(-5px)',
-                  borderColor: '#ff6f00',
-                  // boxShadow: '0 4px 12px rgba(0,0,0,0.12)'
-                  boxShadow: '0 4px 12px rgba(255, 111, 0, 0.9)',
-                  // backgroundColor: '#ff6f00'
+                  transform: 'translateY(-6px)',
+                  borderColor: '#10B981',
+                  boxShadow: '0 12px 40px rgba(16, 185, 129, 0.15)',
                 }
               }}>
                 <Box className="feature-icon" sx={{
                   mb: 2,
-                  color: feature.isHighlighted ? 'white' : '#ff6f00'
+                  color: feature.isHighlighted ? 'white' : '#10B981'
                 }}>
                   {/* {feature.icon} */}
 
@@ -596,8 +584,7 @@ const WhyChooseUs = () => {
                 <Typography className="feature-title" variant="h5" sx={{
                   fontWeight: 600,
                   mb: 2,
-                  // color: '#ff6f00'
-                  color: feature.isHighlighted ? 'white' : '#ff6f00'
+                  color: feature.isHighlighted ? 'white' : '#10B981'
                 }}>
                   {feature.title}
                 </Typography>
@@ -622,10 +609,10 @@ const CallToActionSection = () => {
     <Box sx={{
       position: 'relative',
       height: '400px',
-      backgroundImage: 'url(/images/food-background.jpg)', // Replace with your image path
+      backgroundImage: 'url(/images/food-background.jpg)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
-      backgroundAttachment: 'fixed', // This creates the parallax effect
+      backgroundAttachment: 'fixed',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -638,7 +625,7 @@ const CallToActionSection = () => {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: 'rgba(16, 185, 129, 0.7)',
         zIndex: 1
       }
     }}>
@@ -660,19 +647,19 @@ const CallToActionSection = () => {
             variant="contained"
             size="large"
             sx={{
-              backgroundColor: '#ff6f00',
+              backgroundColor: '#10B981',
               color: 'white',
-              borderRadius: '25px',
+              borderRadius: '12px',
               px: 4,
               py: 1.5,
               fontSize: '1.1rem',
               fontWeight: 'bold',
               textTransform: 'none',
-              boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
               '&:hover': {
-                backgroundColor: '#e65100',
+                backgroundColor: '#059669',
                 transform: 'translateY(-2px)',
-                boxShadow: '0 4px 12px rgba(255, 111, 0, 0.3)',
+                boxShadow: '0 8px 25px rgba(16, 185, 129, 0.35)',
               },
               transition: 'all 0.3s ease'
             }}
@@ -691,7 +678,7 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        backgroundColor: '#ff6f00',
+        backgroundColor: '#10B981',
         color: 'white',
         py: 6,
         mt: 12,
@@ -739,12 +726,12 @@ const Footer = () => {
               color="white"
               type="submit"
               sx={{
-                borderRadius: '20px',
+                borderRadius: '12px',
                 px: 3,
                 border: '2px solid white',
-                backgroundColor: '#65615C',
+                backgroundColor: '#059669',
                 '&:hover': {
-                  backgroundColor: '#e65100',
+                  backgroundColor: '#047857',
                 }
               }}
             >
@@ -779,7 +766,7 @@ const Footer = () => {
                   underline="hover"
                   component={Link}
                   sx={{
-                    '&:hover': { color: '#65615C' }
+                    '&:hover': { color: '#D1FAE5' }
                   }}
                 >
                   Kitchen
@@ -793,7 +780,7 @@ const Footer = () => {
                   underline="hover"
                   component={Link}
                   sx={{
-                    '&:hover': { color: '#65615C' }
+                    '&:hover': { color: '#D1FAE5' }
                   }}
                 >
                   Taste
@@ -807,7 +794,7 @@ const Footer = () => {
                   underline="hover"
                   component={Link}
                   sx={{
-                    '&:hover': { color: '#65615C' }
+                    '&:hover': { color: '#D1FAE5' }
                   }}
                 >
                   Recipes
@@ -830,7 +817,7 @@ const Footer = () => {
                   underline="hover"
                   component={Link}
                   sx={{
-                    '&:hover': { color: '#65615C' }
+                    '&:hover': { color: '#D1FAE5' }
                   }}
                 >
                   Alice
@@ -844,7 +831,7 @@ const Footer = () => {
                   underline="hover"
                   component={Link}
                   sx={{
-                    '&:hover': { color: '#65615C' }
+                    '&:hover': { color: '#D1FAE5' }
                   }}
                 >
                   Sweet
@@ -858,7 +845,7 @@ const Footer = () => {
                   underline="hover"
                   component={Link}
                   sx={{
-                    '&:hover': { color: '#65615C' }
+                    '&:hover': { color: '#D1FAE5' }
                   }}
                 >
                   Anna
@@ -882,7 +869,7 @@ const Footer = () => {
 
                   color: 'white',
                   '&:hover': {
-                    color: '#65615C',
+                    color: '#D1FAE5',
 
                   }
                 }}

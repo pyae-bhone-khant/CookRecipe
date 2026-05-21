@@ -102,7 +102,7 @@ export default function About() {
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="h3"
-              color="#ff7b00"
+              color="#10B981"
               fontWeight={700}
               gutterBottom
             >
@@ -137,7 +137,7 @@ export default function About() {
                   sx={{
                     transition: "color 0.3s ease",
                     "&:hover": {
-                      color: "#ff7b00",
+                      color: "#10B981",
                     },
                   }}
                 >
@@ -164,7 +164,7 @@ export default function About() {
                    objectFit:'cover',
                   "&:hover": {
                     transform: "scale(1.03)",
-                    boxShadow: "0 8px 20px rgba(255, 123, 0, 0.4)",
+                    boxShadow: "0 8px 20px rgba(16, 185, 129, 0.3)",
                   },
                 }}
               />
@@ -194,7 +194,7 @@ export default function About() {
                   transition: "transform 0.4s ease, box-shadow 0.4s ease",
                   "&:hover": {
                     transform: "scale(1.03)",
-                    boxShadow: "0 8px 20px rgba(255, 123, 0, 0.4)",
+                    boxShadow: "0 8px 20px rgba(16, 185, 129, 0.3)",
                   },
                 }}
               />
@@ -207,7 +207,7 @@ export default function About() {
                   sx={{
                     transition: "color 0.3s ease",
                     "&:hover": {
-                      color: "#ff7b00",
+                      color: "#10B981",
                     },
                   }}
                 >
@@ -220,7 +220,7 @@ export default function About() {
             {/* The Team */}
             <Typography
               variant="h5"
-              color="#ff7b00"
+              color="#10B981"
               fontWeight={700}
               gutterBottom
             >
@@ -281,7 +281,7 @@ export default function About() {
                     transition: "transform 0.3s ease, box-shadow 0.3s ease",
                     "&:hover": {
                       transform: "translateY(-5px)",
-                      boxShadow: "0 4px 12px rgba(255, 111, 0, 0.9)",
+                      boxShadow: "0 8px 30px rgba(16, 185, 129, 0.2)",
                     },
                   }}
                 >
