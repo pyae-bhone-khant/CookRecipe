@@ -238,7 +238,7 @@ export default function RecipeListPage() {
         {/* Search + Categories */}
         <Box mt={5}>
           <Typography variant="h4" textAlign="center"
-            sx={{ fontWeight: 'bold', color: '#ff6f00' }}
+            sx={{ fontWeight: 'bold', color: '#008000' }}
           >
             What to Cook?
           </Typography>
