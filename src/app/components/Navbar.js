@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   AppBar,
   Toolbar,
@@ -112,31 +112,43 @@ const Navbar = () => {
   };
 
 
+  // Mobile menu state
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuButtonRef = useRef(null);
+
   return (
     <AppBar position="sticky" sx={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', color: 'text.primary', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(16, 185, 129, 0.1)', boxShadow: '0 4px 20px rgba(16, 185, 129, 0.1)' }}>
-      <Toolbar sx={{ justifyContent: 'space-around', alignItems: 'center' }}>
+      <Toolbar sx={{ justifyContent: 'space-between', alignItems: 'center', px: { xs: 1, sm: 2 } }}>
         {/* Logo */}
         <Typography
           variant="h6"
           sx={{
             color: 'primary.main',
             fontWeight: 'bold',
-            cursor: 'pointer', // 🖱 cursor pointer so user knows it's clickable
+            cursor: 'pointer',
+            fontSize: { xs: '1.1rem', sm: '1.25rem' },
           }}
-          onClick={() => handleNavigate('/home')} // 👉 Add this line
+          onClick={() => handleNavigate('/home')}
         >
           COOKCRAFT
         </Typography>
 
+        {/* Mobile Menu Button - Only show on mobile */}
+        <IconButton
+          ref={mobileMenuButtonRef}
+          sx={{ display: { xs: 'flex', md: 'none' }, color: 'text.primary' }}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          <MenuIcon />
+        </IconButton>
 
-        {/* Navigation Links */}
-        <Box>
+        {/* Navigation Links - Hide on mobile */}
+        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <Button
             onClick={() => handleNavigate('/home')}
             sx={{
               color: isActive('/home') ? 'primary.main' : 'text.primary',
               mx: 1,
-              // fontWeight: isActive('/home') ? 'normal' : 'normal',
               transition: 'transform 0.3s',
               '&:hover': {
                 backgroundColor: 'transparent',
@@ -153,7 +165,6 @@ const Navbar = () => {
             sx={{
               color: isActive('/recipes') ? 'primary.main' : 'text.primary',
               mx: 1,
-              // fontWeight: isActive('/recipes') ? 'bold' : 'normal',
               transition: 'transform 0.3s',
               '&:hover': {
                 backgroundColor: 'transparent',
@@ -170,7 +181,6 @@ const Navbar = () => {
             sx={{
               color: isActive('/about') ? 'primary.main' : 'text.primary',
               mx: 1,
-              // fontWeight: isActive('/about') ? 'bold' : 'normal',
               transition: 'transform 0.3s',
               '&:hover': {
                 backgroundColor: 'transparent',
@@ -187,7 +197,6 @@ const Navbar = () => {
             sx={{
               color: isActive('/contact') ? 'primary.main' : 'text.primary',
               mx: 1,
-              // fontWeight: isActive('/contact') ? 'bold' : 'normal',
               transition: 'transform 0.3s',
               '&:hover': {
                 backgroundColor: 'transparent',
@@ -201,7 +210,7 @@ const Navbar = () => {
         </Box>
 
         {/* Action Icons */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+        <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1.5 }}>
 
           {/* + create */}
           {pathname !== "/recipes/create" && (
@@ -344,6 +353,194 @@ const Navbar = () => {
             <MenuItem
               onClick={() => {
                 handleCloseMore();
+                handleOpenLogoutDialog();
+              }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
+                },
+              }}
+            >
+              <ListItemIcon>
+                <LogoutIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Sign Out" />
+            </MenuItem>
+          </Menu>
+
+          {/* Mobile Menu - Only show on mobile */}
+          <Menu
+            anchorEl={mobileMenuButtonRef.current}
+            open={mobileMenuOpen}
+            onClose={() => setMobileMenuOpen(false)}
+            PaperProps={{
+              elevation: 4,
+              sx: {
+                borderRadius: 2,
+                mt: 1,
+                minWidth: 200,
+                bgcolor: "white",
+              },
+            }}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            <MenuItem
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleNavigate('/home');
+              }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
+                },
+              }}
+            >
+              Home
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleNavigate('/recipes');
+              }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
+                },
+              }}
+            >
+              Recipes
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleNavigate('/about');
+              }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
+                },
+              }}
+            >
+              About
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleNavigate('/contact');
+              }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
+                },
+              }}
+            >
+              Contact Us
+            </MenuItem>
+            <Divider />
+            {pathname !== "/recipes/create" && (
+              <MenuItem
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  handleNavigate('/recipes/create');
+                }}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "rgba(16, 185, 129, 0.1)",
+                  },
+                }}
+              >
+                <ListItemIcon>
+                  <AddIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Create Post" />
+              </MenuItem>
+            )}
+            <MenuItem
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleNavigate('/profile');
+              }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
+                },
+              }}
+            >
+              <ListItemIcon>
+                <Avatar
+                  src={user?.image_url || undefined}
+                  sx={{
+                    bgcolor: user?.image_url ? 'transparent' : '#10B981',
+                    width: 24,
+                    height: 24,
+                    fontSize: '0.8rem',
+                  }}
+                >
+                  {!user?.image_url && (
+                    <Box component="span" sx={{ fontSize: '0.8rem', fontWeight: 'bold' }}>
+                      {user?.username?.charAt(0)?.toUpperCase() || session?.user?.username?.charAt(0)?.toUpperCase() || session?.user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                    </Box>
+                  )}
+                </Avatar>
+              </ListItemIcon>
+              <ListItemText primary="Profile" />
+            </MenuItem>
+            <Divider />
+            <MenuItem
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleNavigate('/profile/edit-profile');
+              }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
+                },
+              }}
+            >
+              <ListItemIcon>
+                <EditIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Edit Profile" />
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleNavigate('/history');
+              }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
+                },
+              }}
+            >
+              <ListItemIcon>
+                <HistoryIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="History" />
+            </MenuItem>
+            {user?.role === 'admin' && (
+              <MenuItem
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleNavigate('/admin/dashboard');
+              }}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "rgba(16, 185, 129, 0.1)",
+                },
+              }}
+            >
+              <ListItemIcon>
+                <RocketLaunch fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Admin" />
+            </MenuItem>
+            )}
+            <Divider />
+            <MenuItem
+              onClick={() => {
+                setMobileMenuOpen(false);
                 handleOpenLogoutDialog();
               }}
               sx={{

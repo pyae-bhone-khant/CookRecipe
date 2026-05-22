@@ -232,13 +232,16 @@ export default function RecipeListPage() {
   return (
     <AppLayout>
       <Navbar />
-      <Container maxWidth="lg" sx={{ mt: 4 }}>
-        <TrendingSlider />
+      <Container maxWidth="lg" sx={{ mt: { xs: 2, sm: 4 } }}>
+        {/* Hide TrendingSlider on mobile */}
+        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+          <TrendingSlider />
+        </Box>
 
         {/* Search + Categories */}
-        <Box mt={5}>
+        <Box mt={{ xs: 3, sm: 5 }}>
           <Typography variant="h4" textAlign="center"
-            sx={{ fontWeight: 'bold', color: '#008000' }}
+            sx={{ fontWeight: 'bold', color: '#008000', fontSize: { xs: '1.5rem', sm: '2rem' } }}
           >
             What to Cook?
           </Typography>
@@ -251,13 +254,18 @@ export default function RecipeListPage() {
           </Stack>
         </Box>
 
-        <Stack direction="row" spacing={4} mt={4}>
-          {/* Category Filters */}
-
-
-          <Stack spacing={2}>
-            <Typography variant="h6">Categories</Typography>
-            <Box sx={{ display: 'flex', gap: 1, flexDirection: 'column' }}>
+        <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 2, md: 4 }} mt={{ xs: 3, md: 4 }}>
+          {/* Category Filters - Horizontal scroll on mobile */}
+          <Box sx={{ width: { xs: '100%', md: 'auto' } }}>
+            <Typography variant="h6" sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>Categories</Typography>
+            <Box sx={{ 
+              display: 'flex', 
+              gap: 1, 
+              flexDirection: { xs: 'row', md: 'column' },
+              overflowX: { xs: 'auto', md: 'visible' },
+              pb: { xs: 1, md: 0 },
+              flexWrap: { xs: 'nowrap', md: 'wrap' }
+            }}>
               <Button
                 variant={selectedCategory === "All" ? "contained" : "outlined"}
                 onClick={() => setSelectedCategory("All")}
@@ -268,6 +276,8 @@ export default function RecipeListPage() {
                   color: selectedCategory === "All" ? 'white' : 'inherit',
                   transition: 'transform 0.5s',
                   transition: 'all 0.5s ease',
+                  whiteSpace: 'nowrap',
+                  minWidth: { xs: 'auto', md: '100%' },
                   '&:hover': {
                     backgroundColor: selectedCategory === "All" ? '#e65100' : '#fff3e0',
                     transform: 'translateY(-5px)',
@@ -289,6 +299,8 @@ export default function RecipeListPage() {
                     backgroundColor: selectedCategory === category.name ? '#ff6f00' : 'transparent',
                     color: selectedCategory === category.name ? 'white' : 'inherit',
                     transition: 'all 0.5s ease',
+                    whiteSpace: 'nowrap',
+                    minWidth: { xs: 'auto', md: '100%' },
                     '&:hover': {
                       backgroundColor: selectedCategory === category.name ? '#e65100' : '#fff3e0',
                       transform: 'translateY(-5px)',
@@ -300,7 +312,7 @@ export default function RecipeListPage() {
               ))}
 
             </Box>
-          </Stack>
+          </Box>
 
 
           {/* Recipe Cards */}
@@ -337,7 +349,15 @@ export default function RecipeListPage() {
               {getFilteredRecipes()
                 .slice((currentPage - 1) * 12, currentPage * 12)
                 .length > 0 ? (
-                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 3 }}>
+                <Box sx={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: { 
+                    xs: 'repeat(auto-fill, minmax(150px, 1fr))',
+                    sm: 'repeat(auto-fill, minmax(200px, 1fr))',
+                    md: 'repeat(auto-fill, minmax(280px, 1fr))'
+                  }, 
+                  gap: { xs: 2, sm: 3 } 
+                }}>
                   {getFilteredRecipes()
                     .slice((currentPage - 1) * 12, currentPage * 12)
                     .map((recipe) => (

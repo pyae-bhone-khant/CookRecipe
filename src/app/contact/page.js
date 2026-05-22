@@ -57,7 +57,7 @@ export default function Contact() {
       <Navbar />
 
       {/* contact form */}
-      <Box sx={{ bgcolor: "white", pt: 6 }}>
+      <Box sx={{ bgcolor: "white", pt: { xs: 4, md: 6 } }}>
         {/* Top Section */}
         <Container maxWidth="lg">
           <Box
@@ -66,17 +66,17 @@ export default function Contact() {
               flexDirection: { xs: "column", md: "row" },
               alignItems: "center",
               justifyContent: "space-between",
-              minHeight: { md: 400 },
-              mt: 4,
-              gap: 4,
+              minHeight: { xs: 'auto', md: 400 },
+              mt: { xs: 2, md: 4 },
+              gap: { xs: 3, md: 4 },
             }}
           >
             {/* Left: Text */}
             <Box sx={{ flex: 1 }}>
-              <Typography variant="h5" fontWeight="bold" gutterBottom>
+              <Typography variant="h5" fontWeight="bold" gutterBottom sx={{ fontSize: { xs: '1.5rem', md: '1.75rem' } }}>
                 Contact <br /> Informations
               </Typography>
-              <Typography variant="body1" mb={3}>
+              <Typography variant="body1" mb={3} sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>
                 Whether you have a question about a recipe, want to give
                 feedback, or just want to say hello, the CookCraft team is here
                 to help. Fill out the form below or reach us directly through
@@ -85,7 +85,7 @@ export default function Contact() {
               </Typography>
               <Button
                 variant="contained"
-                sx={{ bgcolor: "#10B981", color: "white" }}
+                sx={{ bgcolor: "#10B981", color: "white", width: { xs: '100%', md: 'auto' } }}
               >
                 CONTACT US
               </Button>
@@ -97,8 +97,8 @@ export default function Contact() {
               src="/images/contact-girl.png"
               alt="Contact"
               sx={{
-                width: { xs: "80%", sm: "70%", md: "90%" },
-                maxWidth: "350px",
+                width: { xs: "100%", sm: "80%", md: "90%" },
+                maxWidth: { xs: "250px", md: "350px" },
                 borderRadius: 3,
                 flex: 1,
               }}
@@ -107,14 +107,15 @@ export default function Contact() {
         </Container>
 
         {/* Middle Form Section */}
-        <Box sx={{ bgcolor: "#e9e9e9", py: 6, mt: 6 }}>
+        <Box sx={{ bgcolor: "#e9e9e9", py: { xs: 4, md: 6 }, mt: { xs: 4, md: 6 } }}>
           <Container maxWidth="lg">
             <Typography
               variant="h6"
               fontWeight="bold"
               textAlign="center"
-              mb={4}
+              mb={{ xs: 3, md: 4 }}
               color="#10B981"
+              sx={{ fontSize: { xs: '1.25rem', md: '1.5rem' } }}
             >
               Send Message
             </Typography>
@@ -123,36 +124,36 @@ export default function Contact() {
               sx={{
                 display: "flex",
                 flexDirection: { xs: "column", md: "row" },
-                gap: 4,
+                gap: { xs: 3, md: 4 },
               }}
             >
               {/* Contact Info - Left Side */}
-              <Stack spacing={3} sx={{ flex: 1 }}>
-                <Paper sx={{ p: 2, display: "flex", alignItems: "center" }}>
+              <Stack spacing={2} sx={{ flex: 1 }}>
+                <Paper sx={{ p: { xs: 2, md: 2 }, display: "flex", alignItems: "center" }}>
                   <PhoneIcon sx={{ mr: 2 }} color="action" />
                   <Box>
-                    <Typography fontWeight="bold">Phone Number</Typography>
-                    <Typography>+959123456789</Typography>
+                    <Typography fontWeight="bold" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Phone Number</Typography>
+                    <Typography sx={{ fontSize: { xs: '0.85rem', sm: '0.95rem' } }}>+959123456789</Typography>
                   </Box>
                 </Paper>
-                <Paper sx={{ p: 2, display: "flex", alignItems: "center" }}>
+                <Paper sx={{ p: { xs: 2, md: 2 }, display: "flex", alignItems: "center" }}>
                   <EmailIcon sx={{ mr: 2 }} color="action" />
                   <Box>
-                    <Typography fontWeight="bold">Email</Typography>
-                    <Typography>cook@gmail.com</Typography>
+                    <Typography fontWeight="bold" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Email</Typography>
+                    <Typography sx={{ fontSize: { xs: '0.85rem', sm: '0.95rem' } }}>cook@gmail.com</Typography>
                   </Box>
                 </Paper>
-                <Paper sx={{ p: 2, display: "flex", alignItems: "center" }}>
+                <Paper sx={{ p: { xs: 2, md: 2 }, display: "flex", alignItems: "center" }}>
                   <LocationOnIcon sx={{ mr: 2 }} color="action" />
                   <Box>
-                    <Typography fontWeight="bold">Location</Typography>
-                    <Typography>MICT Building4</Typography>
+                    <Typography fontWeight="bold" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Location</Typography>
+                    <Typography sx={{ fontSize: { xs: '0.85rem', sm: '0.95rem' } }}>MICT Building4</Typography>
                   </Box>
                 </Paper>
               </Stack>
 
               {/* Contact Form - Right Side */}
-              <Box component="form" onSubmit={handleSubmit} sx={{ flex: 2 }}>
+              <Box component="form" onSubmit={handleSubmit} sx={{ flex: { xs: 1, md: 2 } }}>
                 <Stack spacing={2}>
                   <Box
                     sx={{
@@ -194,17 +195,10 @@ export default function Contact() {
                     label="Message"
                     variant="outlined"
                   />
-                  {/* <Button
-                                        type="submit"
-                                        variant="contained"
-                                        sx={{ bgcolor: "#F57C00", px: 4, color: 'white' }}
-                                    >
-                                        Send Message
-                                    </Button> */}
                   <Button
                     type="submit"
                     variant="contained"
-                    sx={{ bgcolor: "#10B981", px: 4, color: "white" }}
+                    sx={{ bgcolor: "#10B981", px: 4, color: "white", width: { xs: '100%', md: 'auto' } }}
                   >
                     Send Message
                   </Button>

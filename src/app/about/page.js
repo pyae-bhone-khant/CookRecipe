@@ -89,12 +89,12 @@ export default function About() {
       <Navbar />
 
       {/* about */}
-      <Box sx={{ px: { xs: 2, md: 6 }, py: 8, maxWidth: "1200px", mx: "auto" }}>
+      <Box sx={{ px: { xs: 2, sm: 3, md: 6 }, py: { xs: 4, md: 8 }, maxWidth: "1200px", mx: "auto" }}>
         <Box
           sx={{
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
-            gap: 6,
+            gap: { xs: 3, md: 6 },
           }}
         >
 
@@ -105,11 +105,12 @@ export default function About() {
               color="#10B981"
               fontWeight={700}
               gutterBottom
+              sx={{ fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2.25rem' } }}
             >
               About CookCraft
             </Typography>
 
-            <Typography variant="body1" sx={{ mb: 5, lineHeight: 1.8 }}>
+            <Typography variant="body1" sx={{ mb: { xs: 3, md: 5 }, lineHeight: 1.8, fontSize: { xs: '0.9rem', sm: '1rem' } }}>
               CookCraft is developed by a passionate team of developers,
               designers, and food enthusiasts who understand the everyday
               challenges of deciding what to cook. We aim to bridge the
@@ -125,8 +126,8 @@ export default function About() {
                 display: "flex",
                 flexDirection: { xs: "column", md: "row" },
                 alignItems: "center",
-                gap: 4,
-                mb: 6,
+                gap: { xs: 3, md: 4 },
+                mb: { xs: 4, md: 6 },
               }}
             >
               <Box sx={{ flex: 1 }}>
@@ -139,13 +140,14 @@ export default function About() {
                     "&:hover": {
                       color: "#10B981",
                     },
+                    fontSize: { xs: '1rem', sm: '1.125rem' }
                   }}
                 >
-                  “Every dish we create is a journey of learning, capturing the
-                  spirit, taste, and teamwork of student chefs.”
+                  "Every dish we create is a journey of learning, capturing the
+                  spirit, taste, and teamwork of student chefs."
                 </Typography>
 
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>
                   — CookCraft Team
                 </Typography>
               </Box>
@@ -156,11 +158,11 @@ export default function About() {
                 alt="CookCraft Team"
                 sx={{
                   width: "100%",
-                  maxWidth: "400px",
+                  maxWidth: { xs: "100%", md: "400px" },
                   borderRadius: 2,
                   boxShadow: 3,
                   transition: "transform 0.4s ease, box-shadow 0.4s ease",
-                  height: "200px",
+                  height: { xs: "150px", md: "200px" },
                    objectFit:'cover',
                   "&:hover": {
                     transform: "scale(1.03)",
@@ -173,10 +175,10 @@ export default function About() {
             <Box
               sx={{
                 display: "flex",
-                flexDirection: { xs: "column", md: "row" },
+                flexDirection: { xs: "column-reverse", md: "row" },
                 alignItems: "center",
-                gap: 4,
-                mb: 6,
+                gap: { xs: 3, md: 4 },
+                mb: { xs: 4, md: 6 },
               }}
             >
 
@@ -186,8 +188,8 @@ export default function About() {
                 alt="CookCraft Team"
                 sx={{
                   width: "100%",
-                  maxWidth: "400px",
-                  height: "200px",
+                  maxWidth: { xs: "100%", md: "400px" },
+                  height: { xs: "150px", md: "200px" },
                   borderRadius: 2,
                   boxShadow: 3,
                   objectFit:'cover',
@@ -209,9 +211,10 @@ export default function About() {
                     "&:hover": {
                       color: "#10B981",
                     },
+                    fontSize: { xs: '1rem', sm: '1.125rem' }
                   }}
                 >
-                  “CookCraft is built by a team of developers, designers, and food lovers to make everyday cooking easier. Our platform connects people through smart, ingredient-based recipes — helping reduce food waste, simplify meal planning, and support healthier eating.”
+                  "CookCraft is built by a team of developers, designers, and food lovers to make everyday cooking easier. Our platform connects people through smart, ingredient-based recipes — helping reduce food waste, simplify meal planning, and support healthier eating."
                 </Typography>
 
               </Box>
@@ -223,15 +226,16 @@ export default function About() {
               color="#10B981"
               fontWeight={700}
               gutterBottom
+              sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' } }}
             >
               Meet the Team
             </Typography>
-            <Typography variant="body1" sx={{ mb: 5, lineHeight: 1.8 }}>
+            <Typography variant="body1" sx={{ mb: { xs: 3, md: 5 }, lineHeight: 1.8, fontSize: { xs: '0.9rem', sm: '1rem' } }}>
               Behind every recipe is a dedicated team of passionate students —
               developers, cooks, and designers — working together to make food
               come alive online. From kitchen experiments to user-friendly UI,
               we craft every detail with love, skill, and creativity. We believe
-              food is a universal language, and we’re here to help everyone speak it.
+              food is a universal language, and we're here to help everyone speak it.
             </Typography>
 
             {/* Stats Section */}
@@ -239,8 +243,8 @@ export default function About() {
               sx={{
                 display: "flex",
                 flexWrap: "wrap",
-                gap: 3,
-                justifyContent: "space-between",
+                gap: { xs: 2, md: 3 },
+                justifyContent: { xs: 'center', md: 'space-between' },
               }}
             >
               {[
@@ -274,8 +278,8 @@ export default function About() {
                   key={index}
                   elevation={3}
                   sx={{
-                    flex: "1 1 260px",
-                    p: 3,
+                    flex: { xs: "1 1 140px", sm: "1 1 200px", md: "1 1 260px" },
+                    p: { xs: 2, md: 3 },
                     textAlign: "center",
                     borderRadius: 2,
                     transition: "transform 0.3s ease, box-shadow 0.3s ease",
@@ -285,14 +289,16 @@ export default function About() {
                     },
                   }}
                 >
-                  {stat.icon}
-                  <Typography variant="h6" fontWeight={700} mt={1}>
+                  <Box sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
+                    {stat.icon}
+                  </Box>
+                  <Typography variant="h6" fontWeight={700} mt={1} sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>
                     {stat.value}
                   </Typography>
-                  <Typography variant="subtitle1" fontWeight={600}>
+                  <Typography variant="subtitle1" fontWeight={600} sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
                     {stat.label}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.75rem', md: '0.875rem' } }}>
                     {stat.desc}
                   </Typography>
                 </Paper>

@@ -127,19 +127,21 @@ export default function Recipe() {
     <Box>
       <Navbar />
 
-      <Box sx={{ pt: 4, pl: 5, maxWidth: "1200px", mx: "auto" }}>
-        {/* Header Banner */}
-        <TrendingSlider />
+      <Box sx={{ pt: { xs: 2, md: 4 }, pl: { xs: 2, sm: 3, md: 5 }, pr: { xs: 2, sm: 3, md: 0 }, maxWidth: "1200px", mx: "auto" }}>
+        {/* Header Banner - Hide on mobile */}
+        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+          <TrendingSlider />
+        </Box>
 
         {/* Search */}
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 5 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mb: { xs: 3, md: 5 } }}>
 
           <SearchBar onSearch={(query) => setSearchQuery(query)} />
 
         </Box>
 
         {/* All Recipes */}
-        <Typography variant="h6" fontWeight="bold" mb={2}>
+        <Typography variant="h6" fontWeight="bold" mb={2} sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}>
           All Recipes
         </Typography>
 
@@ -148,7 +150,7 @@ export default function Recipe() {
           {loading && (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
               <CircularProgress sx={{ color: '#10B981' }} />
-              <Typography sx={{ ml: 2 }}>Loading delicious recipes...</Typography>
+              <Typography sx={{ ml: 2, fontSize: { xs: '0.9rem', sm: '1rem' } }}>Loading delicious recipes...</Typography>
             </Box>
           )}
 
@@ -162,7 +164,7 @@ export default function Recipe() {
           {/* Session Status Info */}
           {!loading && (
             <Box sx={{ mb: 2, textAlign: 'center' }}>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>
                 {session?.user?.id
                   ? `Welcome back, ${session.user.name || session.user.username}! Showing recipes from our community.`
                   : 'Showing sample recipes. Log in to see more recipes from our community!'
@@ -176,7 +178,15 @@ export default function Recipe() {
             {getFilteredRecipes()
               .slice((currentPage - 1) * 12, currentPage * 12)
               .length > 0 ? (
-              <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 3 }}>
+              <Box sx={{ 
+                display: 'grid', 
+                gridTemplateColumns: { 
+                  xs: 'repeat(auto-fill, minmax(150px, 1fr))',
+                  sm: 'repeat(auto-fill, minmax(200px, 1fr))',
+                  md: 'repeat(auto-fill, minmax(280px, 1fr))'
+                }, 
+                gap: { xs: 2, sm: 3 } 
+              }}>
                 {getFilteredRecipes()
                   .slice((currentPage - 1) * 12, currentPage * 12)
                   .map((recipe) => (

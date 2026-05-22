@@ -352,9 +352,10 @@ export default function SubmitRecipePage() {
 
       <Navbar />
 
-      {/* Banner */}
+      {/* Banner - Hide on mobile to save space */}
       <Box
         sx={{
+          display: { xs: 'none', md: 'block' },
           backgroundImage: `url("/images/create-bg.jpg")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -396,7 +397,7 @@ export default function SubmitRecipePage() {
       <Paper
         elevation={6}
         sx={{
-          p: { xs: 3, sm: 5 },
+          p: { xs: 2, sm: 3, md: 5 },
           borderRadius: 4,
           boxShadow: 10,
           bgcolor: "#fffefc",
@@ -404,7 +405,7 @@ export default function SubmitRecipePage() {
           flexDirection: "column",
           gap: 4,
           // Background image ကို ဒီနေရာမှာ ထည့်ပါ
-          backgroundImage: `url("/images/create-footer.jpg")`, // သင့်ရဲ့ image URL ကို ထည့်ပါ
+          backgroundImage: { xs: 'none', md: `url("/images/create-footer.jpg")` }, // Hide background on mobile
           backgroundSize: "cover", // Paper ရဲ့ ဧရိယာတစ်ခုလုံးကို ဖုံးအုပ်ဖို့
           backgroundPosition: "top", // Image ကို အလယ်မှာထားဖို့
           backgroundRepeat: "no-repeat", // Image ကို ထပ်မနေစေဖို့
@@ -430,14 +431,14 @@ export default function SubmitRecipePage() {
         {/* သင့်ရဲ့ form အကြောင်းအရာများ */}
 
         {/* Recipe Form */}
-        <Box sx={{ mt: 6, pb: 10 }}>
-          <Container maxWidth="md">
+        <Box sx={{ mt: { xs: 2, md: 6 }, pb: { xs: 4, md: 10 } }}>
+          <Container maxWidth={false}>
             <Paper
               component="form"
               onSubmit={handleSubmit(onSubmit)}
               elevation={6}
               sx={{
-                p: { xs: 3, sm: 5 },
+                p: { xs: 2, sm: 3, md: 5 },
                 borderRadius: 4,
                 boxShadow: 10,
                 bgcolor: "#fffefc",
@@ -451,6 +452,7 @@ export default function SubmitRecipePage() {
                 fontWeight="bold"
                 textAlign="center"
                 color="primary"
+                sx={{ fontSize: { xs: '1.5rem', sm: '2rem', md: '2.25rem' } }}
               >
                 🍽️ Submit a Recipe
               </Typography>
@@ -680,6 +682,7 @@ export default function SubmitRecipePage() {
                   mt: 4,
                   display: "flex",
                   justifyContent: "flex-end",
+                  flexDirection: { xs: 'column', sm: 'row' },
                   gap: 2,
                 }}
               >
@@ -689,6 +692,7 @@ export default function SubmitRecipePage() {
                   type="submit"
                   variant="contained"
                   size="large"
+                  fullWidth={{ xs: true, sm: false }}
                   sx={{
                     bgcolor: "#fb923c",
                     color: "#fff",
