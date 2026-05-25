@@ -1,3 +1,4 @@
+import { unstable_cache, revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import * as yup from "yup";
 import { prisma } from "@/lib/prisma";
@@ -20,7 +21,6 @@ const schema = yup.object().shape({
 
   category_id: yup
     .string()
-    // .oneOf(["breakfast", "lunch", "dinner", "dessert"], "Invalid category")
     .required("Category is required"),
 
   pre_cooking_time: yup.string().required("Pre-cooking time is required"),
@@ -41,50 +41,135 @@ const schema = yup.object().shape({
     .default("pending"),
 });
 
+const DEFAULT_LIMIT = 24;
 
+async function loadRecipes({ page, limit, search, category }) {
+  const skip = (page - 1) * limit;
+
+  const where = {
+    status: "approve",
+    ...(search
+      ? {
+          name: {
+            contains: search,
+            mode: "insensitive",
+          },
+        }
+      : {}),
+    ...(category
+      ? {
+          category: {
+            name: {
+              equals: category,
+              mode: "insensitive",
+            },
+          },
+        }
+      : {}),
+  };
+
+  const [recipes, total] = await prisma.$transaction([
+    prisma.recipe.findMany({
+      where,
+      orderBy: {
+        createdAt: "desc",
+      },
+      skip,
+      take: limit,
+      select: {
+        id: true,
+        name: true,
+        image_url: true,
+        createdAt: true,
+        category: {
+          select: {
+            name: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            username: true,
+          },
+        },
+        _count: {
+          select: {
+            likes: true,
+            comments: true,
+          },
+        },
+        ratings: {
+          select: {
+            rating: true,
+          },
+        },
+      },
+    }),
+    prisma.recipe.count({ where }),
+  ]);
+
+  const mappedRecipes = recipes.map((recipe) => {
+    const totalRating = recipe.ratings.reduce((sum, item) => sum + item.rating, 0);
+    const averageRating = recipe.ratings.length
+      ? Number((totalRating / recipe.ratings.length).toFixed(1))
+      : 0;
+
+    return {
+      ...recipe,
+      averageRating,
+      likesCount: recipe._count.likes,
+      commentsCount: recipe._count.comments,
+      ratings: undefined,
+      _count: undefined,
+    };
+  });
+
+  return {
+    recipes: mappedRecipes,
+    total,
+    totalPages: Math.ceil(total / limit),
+  };
+}
+
+const getCachedRecipes = unstable_cache(
+  async (page, limit, search, category) => loadRecipes({ page, limit, search, category }),
+  ["recipes-list"],
+  {
+    revalidate: 180,
+    tags: ["recipes-list"],
+  }
+);
 
 // GET endpoint
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const includeRatings = searchParams.get('includeRatings') === 'true';
 
-    const recipes = await prisma.recipe.findMany({
-      where: {
-        status: 'approve',
+    const page = Number.parseInt(searchParams.get("page") || "1", 10);
+    const limit = Number.parseInt(searchParams.get("limit") || `${DEFAULT_LIMIT}`, 10);
+    const search = searchParams.get("search")?.trim() || "";
+    const category = searchParams.get("category")?.trim() || "";
+
+    const safePage = Number.isNaN(page) || page < 1 ? 1 : page;
+    const safeLimit = Number.isNaN(limit) || limit < 1 ? DEFAULT_LIMIT : Math.min(limit, 50);
+
+    const result = await getCachedRecipes(safePage, safeLimit, search, category);
+
+    return NextResponse.json({
+      recipes: result.recipes,
+      pagination: {
+        page: safePage,
+        limit: safeLimit,
+        total: result.total,
+        totalPages: result.totalPages,
+        hasNextPage: safePage < result.totalPages,
+        hasPrevPage: safePage > 1,
       },
-      orderBy: {
-        createdAt: 'desc'
-      },
-      include: {
-        user: true,
-        category: true,
-        ...(includeRatings && {
-          ratings: {
-            select: {
-              rating: true
-            }
-          }
-        })
-      }
     });
-
-    let result = recipes;
-
-    if (includeRatings) {
-      result = recipes.map(recipe => ({
-        ...recipe,
-        averageRating: recipe.ratings?.length > 0
-          ? parseFloat((recipe.ratings.reduce((sum, r) => sum + r.rating, 0) / recipe.ratings.length).toFixed(1))
-          : 0
-      }));
-    }
-
-    return NextResponse.json({ recipes: result });
   } catch (error) {
-    console.error('Error fetching recipes:', error);
+    console.error("Error fetching recipes:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch recipes' },
+      { error: "Failed to fetch recipes" },
       { status: 500 }
     );
   }
@@ -131,6 +216,8 @@ export async function POST(request) {
       });
 
       console.log('Recipe saved successfully with Prisma, ID:', recipe.id);
+      revalidateTag("recipes-list");
+
       return NextResponse.json(
         {
           message: 'Recipe saved successfully!',

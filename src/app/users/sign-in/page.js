@@ -22,6 +22,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import MuiLink from '@mui/material/Link';
 import Link from 'next/link';
 import { getSession, signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const schema = yup.object().shape({
   identifier: yup.string().required("Username or Email is required"),
@@ -51,13 +52,18 @@ export default function Login() {
       });
 
       if (response.ok) {
+        toast.success("Login successful! Welcome back.");
         router.push("/home");
       } else {
-        setLoginError(response.error || "Invalid credentials. Please try again.");
+        const errorMessage = response.error || "Invalid credentials. Please try again.";
+        setLoginError(errorMessage);
+        toast.error(errorMessage);
       }
     } catch (error) {
       console.error(error);
-      setLoginError("An unexpected error occurred. Please try again.");
+      const errorMessage = "An unexpected error occurred. Please try again.";
+      setLoginError(errorMessage);
+      toast.error(errorMessage);
     }
   };
 

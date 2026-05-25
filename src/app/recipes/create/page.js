@@ -51,6 +51,7 @@ import Navbar from "@/app/components/Navbar";
 import InputAdornment from "@mui/material/InputAdornment";
 
 import { Suspense } from "react";
+import toast from "react-hot-toast";
 
 
 import RestaurantIcon from "@mui/icons-material/Restaurant";
@@ -156,40 +157,28 @@ export default function SubmitRecipePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
-  // Helper function to convert file to base64
-  const fileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-    });
-  };
-
   const handleImageUpload = async (file) => {
     if (!file) return null;
 
     try {
-      // Convert file to base64
-      const base64Image = await fileToBase64(file);
+      const formData = new FormData();
+      formData.append('file', file);
 
       const response = await fetch('/api/upload', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          image: base64Image,
-          imageType: file.type,
-          uploadType: 'recipe'
-        }),
+        body: formData,
       });
 
       if (!response.ok) {
         throw new Error('Upload failed');
       }
 
-      return await response.json();
+      const result = await response.json();
+      toast.success('Image uploaded successfully!');
+      return result;
     } catch (err) {
       console.error('Upload error:', err);
+      toast.error('Image upload failed. Please try another image.');
       setMessage('Image upload failed');
       return null;
     }
@@ -223,37 +212,21 @@ export default function SubmitRecipePage() {
     try {
       setUploadProgress(10);
 
-      // Convert file to base64
-      const base64Image = await fileToBase64(file);
-
-      // Set preview to base64 image
-      setPreview(base64Image);
+      const previewUrl = URL.createObjectURL(file);
+      setPreview(previewUrl);
       setUploadProgress(50);
 
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          image: base64Image,
-          imageType: file.type,
-          uploadType: 'recipe'
-        }),
-      });
+      const result = await handleImageUpload(file);
 
-      if (!response.ok) {
+      if (!result?.image_url) {
         throw new Error("Upload failed");
       }
 
-      const result = await response.json();
-
-      // Set the base64 image URL in the form data
       setValue("image_url", result.image_url, { shouldValidate: true });
       setImageFile(file);
       setUploadProgress(100);
 
-      // Clear progress after a short delay
       setTimeout(() => setUploadProgress(0), 1000);
-
     } catch (err) {
       console.error("Upload error:", err);
       setMessage("Image upload failed");
@@ -300,6 +273,7 @@ export default function SubmitRecipePage() {
 
       console.log("API response:", response.data);
 
+      toast.success("Recipe published successfully!");
       setMessage("Recipe submitted successfully! Redirecting to home page...");
       setMessageType("success");
 
@@ -314,6 +288,7 @@ export default function SubmitRecipePage() {
                           error.response?.data?.errors?.join(", ") || 
                           error.message || 
                           "Failed to submit recipe";
+      toast.error(errorMessage);
       setMessage(errorMessage);
       setMessageType("error");
     } finally {

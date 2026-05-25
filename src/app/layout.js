@@ -15,6 +15,7 @@ import "nprogress/nprogress.css";
 import "./styles/nprogress.css"; // or "../app/styles/nprogress.css" depending on path
 import { Suspense } from "react";
 import RouteProgress from "./components/RouteProgress";
+import { Toaster } from "react-hot-toast";
 
 
 const outfit = Outfit({
@@ -57,6 +58,29 @@ export default function RootLayout({ children }) {
               </Suspense>
               </SessionWrapper>
               </AppLayout>
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                style: {
+                  background: "#111827",
+                  color: "#fff",
+                  borderRadius: "12px",
+                  padding: "12px 14px",
+                },
+                success: {
+                  iconTheme: {
+                    primary: "#10B981",
+                    secondary: "#fff",
+                  },
+                },
+                error: {
+                  iconTheme: {
+                    primary: "#EF4444",
+                    secondary: "#fff",
+                  },
+                },
+              }}
+            />
           </StyledRoot>
         </AppRouterCacheProvider>
       </body>

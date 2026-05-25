@@ -43,18 +43,13 @@ export default function RecipeCardWithFavorite({
   const { data: session } = useSession();
   const [isProcessing, setIsProcessing] = useState(false);
   const [favorite, setFavorite] = useState(isFavorite);
-  const [rating, setRating] = useState(0);
-  const [average, setAverage] = useState(0);
-
-  useEffect(() => {
-    if (recipe.ratings && recipe.ratings.length > 0) {
-      const total = recipe.ratings.reduce((sum, r) => sum + r.rating, 0);
-      const avg = total / recipe.ratings.length;
-      setRating(avg.toFixed(1)); // One decimal place
-    } else {
-      setRating(0);
-    }
-  }, [recipe.ratings]);
+  const [average, setAverage] = useState(
+    typeof recipe?.averageRating === "number"
+      ? Number(recipe.averageRating.toFixed(1))
+      : typeof recipe?.rating === "number"
+        ? Number(recipe.rating.toFixed(1))
+        : 0
+  );
 
   if (!recipe) return null;
 
@@ -104,13 +99,21 @@ export default function RecipeCardWithFavorite({
     }
   };
 
-    useEffect(() => {
-      // Get average rating
-      axios
-        .get(`/api/ratings/average?recipeId=${recipe.id}`)
-        .then((res) => setAverage(res.data.average || 0))
-        .catch((err) => console.error("Average rating error", err));
-    }, [recipe.id]);
+  useEffect(() => {
+    if (typeof recipe.averageRating === "number" || typeof recipe.rating === "number") {
+      const nextAverage = typeof recipe.averageRating === "number"
+        ? recipe.averageRating
+        : recipe.rating;
+
+      setAverage(Number(Number(nextAverage).toFixed(1)));
+      return;
+    }
+
+    axios
+      .get(`/api/ratings/average?recipeId=${recipe.id}`)
+      .then((res) => setAverage(Number(res.data.average || 0)))
+      .catch((err) => console.error("Average rating error", err));
+  }, [recipe.averageRating, recipe.id, recipe.rating]);
 
   return (
     <Card

@@ -45,37 +45,71 @@
 
 
 
+import { mkdir, writeFile } from 'fs/promises';
+import path from 'path';
+import sharp from 'sharp';
 import { NextResponse } from 'next/server';
+
+export const runtime = 'nodejs';
+
+const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'recipes');
+
+function getFileExtension(fileName) {
+  const extension = path.extname(fileName).toLowerCase();
+  return extension || '.jpg';
+}
 
 export async function POST(request) {
   try {
-    const body = await request.json();
-    const { image, imageType, uploadType } = body;
+    const formData = await request.formData();
+    const file = formData.get('file');
 
-    if (!image) {
+    if (!(file instanceof File)) {
       return NextResponse.json(
-        { error: 'No image data provided' },
+        { error: 'No file uploaded' },
         { status: 400 }
       );
     }
 
-    // Validate base64 format
-    if (!image.startsWith('data:image/')) {
+    if (!file.type.startsWith('image/')) {
       return NextResponse.json(
-        { error: 'Invalid image format. Must be base64 encoded image.' },
+        { error: 'Only image files are allowed' },
         { status: 400 }
       );
     }
 
-    // For base64 images, we return the base64 string directly
-    // This will be stored in the database instead of as files
+    await mkdir(UPLOAD_DIR, { recursive: true });
+
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const extension = getFileExtension(file.name);
+    const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${extension}`;
+    const outputPath = path.join(UPLOAD_DIR, filename);
+
+    const optimizedBuffer = await sharp(buffer)
+      .rotate()
+      .resize({
+        width: 1600,
+        height: 1600,
+        fit: 'inside',
+        withoutEnlargement: true,
+      })
+      .jpeg({ quality: 80, progressive: true })
+      .toBuffer();
+
+    const blurBuffer = await sharp(buffer)
+      .rotate()
+      .resize(16, 16, { fit: 'cover' })
+      .jpeg({ quality: 35 })
+      .toBuffer();
+
+    await writeFile(outputPath, optimizedBuffer);
+
     return NextResponse.json({
       success: true,
-      image_url: image, // Return the base64 string
-      uploadType: uploadType || 'general',
-      message: 'Image processed successfully'
+      image_url: `/uploads/recipes/${filename}`,
+      blurDataURL: `data:image/jpeg;base64,${blurBuffer.toString('base64')}`,
+      message: 'Image processed successfully',
     });
-
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json(
