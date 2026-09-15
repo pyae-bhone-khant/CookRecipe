@@ -1,59 +1,54 @@
-// "use client";
-// import { Box } from "@mui/material";
+"use client";
 
-// export default function EditPage(){
-//     return <Box>Recipe Edit Page</Box>
-// }
+import { Box, Typography, Container, CircularProgress } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-// 'use client';
+export default function EditPage({ params }) {
+  const [recipe, setRecipe] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-// import { useEffect, useState } from 'react';
-// import { Card, CardContent, Typography } from '@mui/material';
-// import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try {
+        const response = await fetch(`/api/recipes/${params.id}`);
+        const data = await response.json();
+        setRecipe(data);
+      } catch (error) {
+        console.error("Error fetching recipe:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-// export default function HistoryPage() {
-//   const [histories, setHistories] = useState([]);
+    fetchRecipe();
+  }, [params.id]);
 
-//   useEffect(() => {
-//     const fetchHistories = async () => {
-//       const res = await fetch('/api/users/histories');
-//       const data = await res.json();
-//       setHistories(data);
-//     };
-//     fetchHistories();
-//   }, []);
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
-//   const formatTime = (date) =>
-//     new Date(date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  if (!recipe) {
+    return (
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Typography variant="h6">Recipe not found</Typography>
+      </Container>
+    );
+  }
 
-//   const getIcon = (action) => {
-//     switch (action) {
-//       case 'created': return '🧾';
-//       case 'liked': return '❤️';
-//       case 'commented': return '💬';
-//       default: return '🔔';
-//     }
-//   };
-
-//   return (
-//     <div style={{ padding: '1rem' }}>
-//       <Typography variant="h6" gutterBottom>
-//         Your History
-//       </Typography>
-//       {histories.length === 0 ? (
-//         <Typography>No history found.</Typography>
-//       ) : (
-//         histories.map((history) => (
-//           <Card key={history.id} sx={{ mb: 2, backgroundColor: '#fff7ed' }}>
-//             <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
-//               <ChatBubbleOutlineIcon sx={{ mr: 1 }} />
-//               <Typography variant="body2">
-//                 {formatTime(history.createdAt)} {getIcon(history.action)} {history.message}
-//               </Typography>
-//             </CardContent>
-//           </Card>
-//         ))
-//       )}
-//     </div>
-//   );
-// }
+  return (
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        Edit Recipe: {recipe.title}
+      </Typography>
+      <Typography variant="body1">
+        Recipe edit page - Coming soon
+      </Typography>
+    </Container>
+  );
+}
