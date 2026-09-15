@@ -6,7 +6,8 @@
 import Link from 'next/link';
 import React from 'react';
 import Head from 'next/head';
-import { motion, useScroll, useSpring } from "framer-motion"; 
+import { motion, useScroll, useSpring } from "framer-motion";
+import { useTheme } from './contexts/ThemeContext'; 
 
 
 // MUI Components
@@ -29,6 +30,8 @@ import { Facebook } from '@mui/icons-material';
 
 // Icons
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
 import LunchDiningOutlinedIcon from '@mui/icons-material/LunchDiningOutlined';
@@ -43,13 +46,13 @@ import HealthAndSafetyOutlinedIcon from '@mui/icons-material/HealthAndSafetyOutl
 import Slider from 'react-slick';
 
 
-const Navbar = ({ scrollToTop, scrollToRecipes, scrollToAbout, scrollToContact, activeSection, setActiveSection }) => {
+const Navbar = ({ scrollToTop, scrollToRecipes, scrollToAbout, scrollToContact, activeSection, setActiveSection, mode, toggleTheme }) => {
   return (
     <AppBar
       position="sticky"
       sx={{
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        color: '#0F172A',
+        backgroundColor: mode === 'dark' ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+        color: mode === 'dark' ? '#F8FAFC' : '#0F172A',
         boxShadow: '0 4px 20px rgba(16, 185, 129, 0.1)',
       }}
     >
@@ -116,7 +119,18 @@ const Navbar = ({ scrollToTop, scrollToRecipes, scrollToAbout, scrollToContact, 
 
         </Box>
 
-        <Box sx={{ display: 'flex', gap: 1 }}>
+        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+          <IconButton
+            onClick={toggleTheme}
+            sx={{
+              color: mode === 'dark' ? '#F8FAFC' : '#0F172A',
+              '&:hover': {
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              },
+            }}
+          >
+            {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+          </IconButton>
           <Link href="/users/sign-up" passHref>
             <Button variant="contained" sx={{
               backgroundColor: '#10B981',
@@ -160,7 +174,7 @@ const Navbar = ({ scrollToTop, scrollToRecipes, scrollToAbout, scrollToContact, 
 };
 
 // Carousel Arrows
-const NextArrow = ({ onClick }) => (
+const NextArrow = ({ onClick, mode }) => (
   <Button
     onClick={onClick}
     variant="outlined"
@@ -182,7 +196,7 @@ const NextArrow = ({ onClick }) => (
   </Button>
 );
 
-const PrevArrow = ({ onClick }) => (
+const PrevArrow = ({ onClick, mode }) => (
   <Button
     onClick={onClick}
     variant="outlined"
@@ -212,7 +226,7 @@ const trendingItems = [
 ];
 
 
-const TrendingSlider = () => {
+const TrendingSlider = ({ mode }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -220,14 +234,14 @@ const TrendingSlider = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow mode={mode} />,
+    prevArrow: <PrevArrow mode={mode} />,
     speed: 800,
-    cssEase: 'cubic-bezier(0.25, 0.1, 0.25, 1)', // Smooth easing function
-    useCSS: true, // Hardware accelerated animations
-    useTransform: true, // CSS transforms သုံးမယ်
-    fade: true, // Fade effect ထည့်ချင်ရင် (optional)
-    pauseOnHover: true, // Hover လုပ်ရင် autoplay ခဏရပ်မယ်
+    cssEase: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+    useCSS: true,
+    useTransform: true,
+    fade: true,
+    pauseOnHover: true,
   };
 
 
@@ -304,10 +318,10 @@ const TrendingSlider = () => {
 };
 
 // Taste of Food Section
-const FoodCategoryCard = ({ icon, title, description }) => (
+const FoodCategoryCard = ({ icon, title, description, mode }) => (
   <Card sx={{
     height: '100%', p: 2, borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
-
+    background: mode === 'dark' ? '#1E293B' : '#FFFFFF',
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
@@ -319,20 +333,18 @@ const FoodCategoryCard = ({ icon, title, description }) => (
       borderColor: '#10B981',
       boxShadow: '0 8px 30px rgba(16, 185, 129, 0.15)',
     },
-
-
   }}>
     <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
       <Box sx={{ mr: 2, color: '#10B981' }}>{icon}</Box>
       <Box>
         <Typography variant="h6" sx={{ fontWeight: '600', color: '#10B981' }}>{title}</Typography>
-        <Typography variant="body2" color="black">{description}</Typography>
+        <Typography variant="body2" sx={{ color: mode === 'dark' ? '#CBD5E1' : 'black' }}>{description}</Typography>
       </Box>
     </Box>
   </Card>
 );
 
-const TasteOfFood = () => {
+const TasteOfFood = ({ mode }) => {
   const foodItems = [
     { icon: <RestaurantMenuOutlinedIcon sx={{ fontSize: 40 }} />, title: 'Breakfast', description: 'You can choose from a variety of healthy breakfast menus.' },
     { icon: <LunchDiningOutlinedIcon sx={{ fontSize: 40 }} />, title: 'Lunch', description: 'You can easily prepare quick and delicious lunch dishes.' },
@@ -343,8 +355,7 @@ const TasteOfFood = () => {
 
   return (
     <Box sx={{
-      py: 7 //---------------------------------------------------
-
+      py: 7,
     }}>
       <Container maxWidth="lg">
         <Typography variant="h4" align="center" sx={{
@@ -357,7 +368,7 @@ const TasteOfFood = () => {
         <Grid container spacing={3} sx={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} >
           {foodItems.map((item, index) => (
             <Grid item key={index} xs={12} sm={6} md={4} lg={3} sx={{ display: 'flex', width: "350px", height: "100px", my: 2 }} >
-              <FoodCategoryCard {...item} />
+              <FoodCategoryCard {...item} mode={mode} />
             </Grid>
           ))}
         </Grid>
@@ -367,7 +378,7 @@ const TasteOfFood = () => {
 };
 
 //  Recipes component
-const PopularRecipes = () => {
+const PopularRecipes = ({ mode }) => {
   // Hard-coded recipe data with different titles, authors and images
   const recipes = [
     {
@@ -404,7 +415,7 @@ const PopularRecipes = () => {
 
   return (
     <Box sx={{
-      py: 13, //------------------------------------------------
+      py: 13,
     }}>
       <Container maxWidth="lg">
         <Typography variant="h4" align="center" sx={{
@@ -424,15 +435,16 @@ const PopularRecipes = () => {
         >
           {recipes.map((recipe, index) => (
             <Grid item key={index} xs={12} sm={6} md={4} sx={{
-              maxWidth: '350px', // ဒါမှမဟုတ် width: '100%'
-              flexBasis: 'calc(33.333% - 24px)' // 3 columns ဖြစ်အောင်
+              maxWidth: '350px',
+              flexBasis: 'calc(33.333% - 24px)'
             }}
             >
               <Card sx={{
                 height: '100%',
                 borderRadius: '16px',
                 border: '2px solid transparent',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                background: mode === 'dark' ? '#1E293B' : '#FFFFFF',
+                boxShadow: mode === 'dark' ? '0 4px 20px rgba(0,0,0,0.3)' : '0 4px 20px rgba(0,0,0,0.06)',
                 transition: 'transform 0.5s',
                 '&:hover': {
                   transform: 'translateY(-6px)',
@@ -470,7 +482,7 @@ const PopularRecipes = () => {
                   <Typography variant="subtitle1" sx={{
                     fontWeight: 600,
                     mb: 0.5,
-                    color: 'black'
+                    color: mode === 'dark' ? '#F8FAFC' : 'black'
                   }}>
                     {recipe.title}
                   </Typography>
@@ -492,7 +504,7 @@ const PopularRecipes = () => {
 };
 
 // Why Choose Us Section Component
-const WhyChooseUs = () => {
+const WhyChooseUs = ({ mode }) => {
   const features = [
     {
       title: "Passion for Taste",
@@ -503,7 +515,7 @@ const WhyChooseUs = () => {
       title: "Super Quality",
       description: "We prioritize the highest quality ingredients ensuring freshness, authenticity, and superior taste in all our prepared foods.",
       icon: <GradeOutlinedIcon sx={{ fontSize: 40 }} />,
-      isHighlighted: true // Add this flag for highlighted card
+      isHighlighted: true
     },
     {
       title: "Healthy and Wholesome",
@@ -514,8 +526,7 @@ const WhyChooseUs = () => {
 
   return (
     <Box sx={{
-      py: 13,  //------------------------------------------------------
-
+      py: 13,
     }}>
       <Container maxWidth="lg">
         <Typography variant="h4" align="center" sx={{
@@ -546,11 +557,10 @@ const WhyChooseUs = () => {
             }}
             >
               <Card sx={{
-
                 p: 3,
                 borderRadius: '16px',
                 border: '2px solid transparent',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                boxShadow: mode === 'dark' ? '0 4px 20px rgba(0,0,0,0.3)' : '0 4px 20px rgba(0,0,0,0.06)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -559,8 +569,7 @@ const WhyChooseUs = () => {
                 maxWidth: '300px',
                 transition: 'transform 0.5s',
                 transition: 'all 0.5s ease',
-
-                backgroundColor: feature.isHighlighted ? '#10B981' : 'white',
+                backgroundColor: feature.isHighlighted ? '#10B981' : (mode === 'dark' ? '#1E293B' : 'white'),
                 '&:hover': {
                   transform: 'translateY(-6px)',
                   borderColor: '#10B981',
@@ -571,14 +580,10 @@ const WhyChooseUs = () => {
                   mb: 2,
                   color: feature.isHighlighted ? 'white' : '#10B981'
                 }}>
-                  {/* {feature.icon} */}
-
                   {React.cloneElement(feature.icon, {
                     sx: {
                       fontSize: 40
-                      // color: feature.isHighlighted ? 'white' : '#ff6f00'
                     }
-
                   })}
                 </Box>
                 <Typography className="feature-title" variant="h5" sx={{
@@ -589,8 +594,7 @@ const WhyChooseUs = () => {
                   {feature.title}
                 </Typography>
                 <Typography className="feature-desc" variant="body1" sx={{
-                  //  color: 'black' 
-                  color: feature.isHighlighted ? 'white' : 'black'
+                  color: feature.isHighlighted ? 'white' : (mode === 'dark' ? '#CBD5E1' : 'black')
                 }}>
                   {feature.description}
                 </Typography>
@@ -604,7 +608,7 @@ const WhyChooseUs = () => {
 };
 
 // Fixed Background Section Component
-const CallToActionSection = () => {
+const CallToActionSection = ({ mode }) => {
   return (
     <Box sx={{
       position: 'relative',
@@ -673,7 +677,7 @@ const CallToActionSection = () => {
 };
 
 
-const Footer = () => {
+const Footer = ({ mode }) => {
   return (
     <Box
       component="footer"
@@ -898,6 +902,7 @@ const Footer = () => {
 
 // Main Page
 export default function HomePage() {
+  const { mode, toggleTheme } = useTheme();
   const recipesRef = React.useRef(null);
   const aboutRef = React.useRef(null);
   const footerRef = React.useRef(null);
@@ -999,8 +1004,11 @@ export default function HomePage() {
 
   return (
     <>
-
-
+      <Box sx={{
+        backgroundColor: mode === 'dark' ? '#0F172A' : '#F8FAFC',
+        minHeight: '100vh',
+        transition: 'background-color 0.3s ease'
+      }}>
       <Navbar
         scrollToTop={scrollToTop}
         scrollToRecipes={scrollToRecipes}
@@ -1008,6 +1016,8 @@ export default function HomePage() {
         scrollToContact={scrollToContact}
         activeSection={activeSection}
         setActiveSection={setActiveSection}
+        mode={mode}
+        toggleTheme={toggleTheme}
       />
 
        <motion.main
@@ -1017,7 +1027,7 @@ export default function HomePage() {
       >
         <div ref={homeRef}>
           <Container>
-            <TrendingSlider />
+            <TrendingSlider mode={mode} />
           </Container>
         </div>
 
@@ -1027,7 +1037,7 @@ export default function HomePage() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <TasteOfFood />
+          <TasteOfFood mode={mode} />
         </motion.div>
 
         <div ref={recipesRef}>
@@ -1037,7 +1047,7 @@ export default function HomePage() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <PopularRecipes />
+            <PopularRecipes mode={mode} />
           </motion.div>
         </div>
 
@@ -1048,7 +1058,7 @@ export default function HomePage() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <WhyChooseUs />
+            <WhyChooseUs mode={mode} />
           </motion.div>
         </div>
 
@@ -1058,7 +1068,7 @@ export default function HomePage() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <CallToActionSection />
+          <CallToActionSection mode={mode} />
         </motion.div>
 
         <div ref={footerRef}>
@@ -1068,10 +1078,11 @@ export default function HomePage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <Footer />
+            <Footer mode={mode} />
           </motion.div>
         </div>
       </motion.main>
+      </Box>
     </>
   );
 }

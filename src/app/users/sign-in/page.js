@@ -32,6 +32,7 @@ const schema = yup.object().shape({
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const {
@@ -43,6 +44,7 @@ export default function Login() {
   });
 
   const onSubmit = async (formData) => {
+    setIsSubmitting(true);
     try {
       setLoginError("");
 
@@ -64,6 +66,8 @@ export default function Login() {
       const errorMessage = "An unexpected error occurred. Please try again.";
       setLoginError(errorMessage);
       toast.error(errorMessage);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -187,8 +191,9 @@ export default function Login() {
                     transform: 'translateY(-5px)',
                   }
              }}
+            disabled={isSubmitting}
           >
-            Login
+            {isSubmitting ? "Logging in..." : "Login"}
           </Button>
 
           <Typography variant="body2" mt={2} textAlign="center">
