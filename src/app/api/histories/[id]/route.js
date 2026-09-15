@@ -1,27 +1,82 @@
-// import { NextResponse } from "next/server";
-// import * as yup from "yup";
-// import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
-// //Validation  schema
-// const schema = yup.object().shape({
-//   user_id: yup
-//     .number()
-//     .typeError("User ID must be a number")
-//     .required("User ID is required"),
+// GET /api/histories/[id] - Get a specific history by ID
+export async function GET(request, { params }) {
+  try {
+    const history = await prisma.history.findUnique({
+      where: { id: parseInt(params.id) },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true,
+          },
+        },
+        recipe: {
+          select: {
+            id: true,
+            title: true,
+            image: true,
+          },
+        },
+      },
+    });
 
-//   recipe_id: yup
-//     .number()
-//     .typeError("Recipe ID must be a number")
-//     .required("Recipe ID is required"),
+    if (!history) {
+      return NextResponse.json(
+        { error: "History not found" },
+        { status: 404 }
+      );
+    }
 
-//     action_type: yup
-//     .string()
-//     .oneOf(["created", "liked", "commented"], "Invalid action")
-//     .required("Action is required"),
+    return NextResponse.json(history);
+  } catch (error) {
+    console.error("Error fetching history:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch history" },
+      { status: 500 }
+    );
+  }
+}
 
-// });
+// PUT /api/histories/[id] - Update a history
+export async function PUT(request, { params }) {
+  try {
+    const body = await request.json();
+    const history = await prisma.history.update({
+      where: { id: parseInt(params.id) },
+      data: body,
+    });
 
+    return NextResponse.json(history);
+  } catch (error) {
+    console.error("Error updating history:", error);
+    return NextResponse.json(
+      { error: "Failed to update history" },
+      { status: 500 }
+    );
+  }
+}
 
+// DELETE /api/histories/[id] - Delete a history
+export async function DELETE(request, { params }) {
+  try {
+    await prisma.history.delete({
+      where: { id: parseInt(params.id) },
+    });
 
-// /app/api/history/route.js
+    return NextResponse.json(
+      { message: "History deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error deleting history:", error);
+    return NextResponse.json(
+      { error: "Failed to delete history" },
+      { status: 500 }
+    );
+  }
+}
 
